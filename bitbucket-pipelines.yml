@@ -24,25 +24,26 @@ clone:
 pipelines:
   branches:
     main:
-      # - step:
-      #     name: Install Node.js 20 and dependencies
-      #     caches:
-      #       - node
-      #     script:
-      #       - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-      #       - apt-get install -y nodejs
-      #       - npm install -g npm@latest
+      - step:
+          name: Install Node.js 20 and dependencies
+          caches:
+            - node
+          script:
+            - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+            - apt-get install -y nodejs
+            - npm install -g npm@latest
 
       - step:
           name: Run SonarCloud code analysis
           caches:
             - node
           script:
-             - pipe: sonarsource/sonarcloud-scan:2.0.0
+            - pipe: sonarsource/sonarcloud-scan:2.0.0
               variables:
                 SONAR_TOKEN: sqp_c5b9ab6a2d23880bfc4a52a2985af7fb71ed9d1b
                 SONAR_PROJECT_KEY: pac-5-catolica_get-your-guide-frontend_052bc07e-729d-4fc5-a5a4-156efc7aeda8v
                 EXTRA_ARGS: '-Dsonar.sources=.'
+              
       - step:
           name: Build Project
           caches:
