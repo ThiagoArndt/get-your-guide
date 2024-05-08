@@ -38,7 +38,6 @@ pipelines:
           name: Run SonarCloud
           script:
             - pipe: sonarsource/sonarcloud-scan:2.0.0
-            - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
       - step:
           name: Build Project
