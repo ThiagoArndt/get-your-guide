@@ -30,22 +30,15 @@ pipelines:
             - node
           script:
             - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-            - sudo apt-get install -y nodejs
+            - apt-get install -y nodejs
             - npm install -g npm@latest
 
       - step:
-          name: Run SonarQube code analysis
+          name: Run SonarCloud code analysis
           caches:
             - node
           script:
-            - npm install sonarqube-scanner -g
-            - sonar-scanner \
-                -Dsonar.host.url=http://your-sonarqube-url:9000 \
-                -Dsonar.login=sqp_c5b9ab6a2d23880bfc4a52a2985af7fb71ed9d1b \
-                -Dsonar.projectKey=pac-5-catolica_get-your-guide-frontend_052bc07e-729d-4fc5-a5a4-156efc7aeda8v \
-                -Dsonar.sources=.
-                # Add more configuration options as needed
-
+             - pipe: sonarsource/sonarcloud-scan:2.0.0
 
       - step:
           name: Build Project
