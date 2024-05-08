@@ -1,60 +1,62 @@
-# This is an example Starter pipeline configuration
-# Use a skeleton to build, test and deploy using manual and parallel steps
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
+  # This is an example Starter pipeline configuration
+  # Use a skeleton to build, test and deploy using manual and parallel steps
+  # -----
+  # You can specify a custom docker image from Docker Hub as your build environment.
 
-image: atlassian/default-image:3
+  image: atlassian/default-image:3
 
-clone:
-  depth: full
+  clone:
+    depth: full
 
 
-# definitions:
-#   caches:
-#     sonar: ~/.sonar/cache
-#   steps:
-#   - step: &build-test-sonarcloud
-#       name: Build, test and analyze on SonarCloud
-#       caches:
-#         - https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
-#         - sonar
-#       script:
-#         - pipe: sonarsource/sonarcloud-scan:2.0.0
-#   - step: &check-quality-gate-sonarcloud
-#       name: Check the Quality Gate on SonarCloud
-#       script:
-#         - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+  # definitions:
+  #   caches:
+  #     sonar: ~/.sonar/cache
+  #   steps:
+  #   - step: &build-test-sonarcloud
+  #       name: Build, test and analyze on SonarCloud
+  #       caches:
+  #         - https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
+  #         - sonar
+  #       script:
+  #         - pipe: sonarsource/sonarcloud-scan:2.0.0
+  #   - step: &check-quality-gate-sonarcloud
+  #       name: Check the Quality Gate on SonarCloud
+  #       script:
+  #         - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
-image: node:20.11.0
-pipelines:
-  branches:
-    main:
-      - step:
-          name: Install Node.js 20 and dependencies
-          script:
-            - npm install
-            
-      - step:
-          name: Run SonarCloud
-          script:
-            - pipe: sonarsource/sonarcloud-scan:2.0.0
+  image: node:20.11.0
+  pipelines:
+    branches:
+      main:
+        - step:
+            name: Install Node.js 20 and dependencies
+            script:
+              - npm install
+              
+        - step:
+            name: Run SonarCloud
+            script:
+              - pipe: sonarsource/sonarcloud-scan:2.0.0
 
-      - step:
-          name: Build Project
-          script:
-            - npm install
-            - npm run build
+        - step:
+            name: Build Project
+            script:
+              - npm install
+              - npm run build
 
-      - step:
-          name: Deploy to Netlify
-          deployment: production
-          script:
-            - curl -X POST -d {} https://api.netlify.com/build_hooks/663af2cb8e221eaa2800b833
-          
-  pull-requests:
-    '**':
-      - step:
-          name: Run SonarCloud
-          script:
-            - pipe: sonarsource/sonarcloud-scan:2.0.0
-            - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+        - step:
+            name: Deploy to Netlify
+            deployment: production
+            script:
+              - npm install netlify-cli --save-dev
+             # - curl -X POST -d {} https://api.netlify.com/build_hooks/663ba90cfc253b00746c1386
+              - netlify deploy --prod --dir=./next
+              
+    pull-requests:
+      '**':
+        - step:
+            name: Run SonarCloud
+            script:
+              - pipe: sonarsource/sonarcloud-scan:2.0.0
+              - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
