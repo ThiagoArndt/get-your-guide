@@ -9,21 +9,21 @@ clone:
   depth: full
 
 
-definitions:
-  caches:
-    sonar: ~/.sonar/cache
-  steps:
-  - step: &build-test-sonarcloud
-      name: Build, test and analyze on SonarCloud
-      caches:
-        - https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
-        - sonar
-      script:
-        - pipe: sonarsource/sonarcloud-scan:2.0.0
-  - step: &check-quality-gate-sonarcloud
-      name: Check the Quality Gate on SonarCloud
-      script:
-        - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+# definitions:
+#   caches:
+#     sonar: ~/.sonar/cache
+#   steps:
+#   - step: &build-test-sonarcloud
+#       name: Build, test and analyze on SonarCloud
+#       caches:
+#         - https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
+#         - sonar
+#       script:
+#         - pipe: sonarsource/sonarcloud-scan:2.0.0
+#   - step: &check-quality-gate-sonarcloud
+#       name: Check the Quality Gate on SonarCloud
+#       script:
+#         - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
 image: node:20.11.0
 pipelines:
@@ -33,9 +33,12 @@ pipelines:
           name: Install Node.js 20 and dependencies
           script:
             - npm install
-
-      - step: *build-test-sonarcloud
-      - step: *check-quality-gate-sonarcloud
+            
+      - step:
+          name: Run SonarCloud
+          script:
+            - pipe: sonarsource/sonarcloud-scan:2.0.0
+            - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
       - step:
           name: Build Project
@@ -51,5 +54,8 @@ pipelines:
           
   pull-requests:
     '**':
-      - step: *build-test-sonarcloud
-      - step: *check-quality-gate-sonarcloud
+      - step:
+          name: Run SonarCloud
+          script:
+            - pipe: sonarsource/sonarcloud-scan:2.0.0
+            - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
