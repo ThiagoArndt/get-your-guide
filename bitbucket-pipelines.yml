@@ -5,31 +5,61 @@
 
 image: atlassian/default-image:3
 
-pipelines:
-  default:
-    - parallel:
-      - step:
-          name: 'Build and Test'
-          script:
-            - echo "Your build and test goes here..."
-      - step:
-          name: 'Lint'
-          script:
-            - echo "Your linting goes here..."
-      - step:
-          name: 'Security scan'
-          script:
-            - echo "Your security scan goes here..."
+definitions:
+  steps:
+    - step: &build-step
+        name: SonarQube analysis
+        script:
+          - pipe: sonarsource/sonarqube-scan:2.0.1
+            variables:
+              SONAR_HOST_URL: ${SONAR_HOST_URL} # Get the value from the repository/workspace variable.
+              SONAR_TOKEN: ${SONAR_TOKEN} # Get the value from the repository/workspace variable. You shouldn't set secret in clear text here.
+  caches:
+    sonar: ~/.sonar
 
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-    - step:
-        name: 'Deployment to Staging'
-        deployment: staging
-        script:
-          - echo "Your deployment to staging script goes here..."
-    - step:
-        name: 'Deployment to Production'
-        deployment: production
-        trigger: 'manual'
-        script:
-          - echo "Your deployment to production script goes here..."
+clone:
+  depth: full
+
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Install Node.js 20 and dependencies
+          caches:
+            - node
+          script:
+            - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            - sudo apt-get install -y nodejs
+            - npm install -g npm@latest
+
+      - step:
+          name: Run SonarQube code analysis
+          caches:
+            - node
+          script:
+            - npm install sonarqube-scanner -g
+            - sonar-scanner \
+                -Dsonar.host.url=http://your-sonarqube-url:9000 \
+                -Dsonar.login=sqp_c5b9ab6a2d23880bfc4a52a2985af7fb71ed9d1b \
+                -Dsonar.projectKey=pac-5-catolica_get-your-guide-frontend_052bc07e-729d-4fc5-a5a4-156efc7aeda8v \
+                -Dsonar.sources=.
+                # Add more configuration options as needed
+
+
+      - step:
+          name: Build Project
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+
+      - step:
+          name: Deploy to Netlify
+          deployment: production
+          caches:
+            - node
+          script:
+            - curl -X POST -d {} https://api.netlify.com/build_hooks/663af2cb8e221eaa2800b833
+
