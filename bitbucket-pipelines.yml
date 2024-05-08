@@ -25,6 +25,7 @@
         - step:
             name: Zip .next Folder
             script:
+              - apt-get update && apt-get install -y zip
               - zip -r website.zip .next
               
         - step:
