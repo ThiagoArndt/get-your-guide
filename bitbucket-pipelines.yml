@@ -11,22 +11,23 @@
             script:
               - npm install
               
-        - step:
-            name: Run SonarCloud
-            script:
-              - pipe: sonarsource/sonarcloud-scan:2.0.0
+        # - step:
+        #     name: Run SonarCloud
+        #     script:
+        #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
         - step:
-            name: Build Project
+            name: Build Project & Zip
             script:
               - npm install
               - npm run build
-              
-        - step:
-            name: Zip .next Folder
-            script:
               - apt-get update && apt-get install -y zip
               - zip -r website.zip .next/
+
+        # - step:
+        #     name: Zip .next Folder
+        #     script:
+
               
         - step:
             name: Deploy to Netlify
