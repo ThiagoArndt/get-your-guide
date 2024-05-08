@@ -21,14 +21,18 @@
             script:
               - npm install
               - npm run build
+            artifacts:
+              - .next/**
+
+
+        - step:
+            name: Zip .next Folder
+            script:
               - apt-get update && apt-get install -y zip
               - zip -r website.zip .next/
+            artifacts:
+              - website.zip
 
-        # - step:
-        #     name: Zip .next Folder
-        #     script:
-
-              
         - step:
             name: Deploy to Netlify
             deployment: production
