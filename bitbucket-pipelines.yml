@@ -39,17 +39,27 @@
             script:
               - pipe: sonarsource/sonarcloud-scan:2.0.0
 
-        # - step:
-        #     name: Build Project
-        #     script:
-        #       - npm install
-        #       - npm run build
+        - step:
+            name: Build Project
+            script:
+              - npm install
+              - npm run build
+              
+        - step:
+            name: Zip .next Folder
+            script:
+              - zip -r website.zip .next
+            # Assuming .next and build folders are in the same directory
+            # If they're not, adjust the paths accordingly
 
         - step:
-            name: Build & Deploy to Netlify
+            name: Deploy to Netlify
             deployment: production
             script:
-              - curl -X POST -d '{}' https://api.netlify.com/build_hooks/663ba90cfc253b00746c1386
+              - curl -H "Content-Type: application/zip" \
+                     -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
+                    --data-binary "@website.zip" \
+                    https://api.netlify.com/api/v1/sites/mysite.netlify.app/deploys
 
     pull-requests:
       '**':
