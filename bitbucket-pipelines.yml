@@ -10,7 +10,8 @@
             name: Install Node.js 20 and dependencies
             script:
               - npm install
-              
+            artifacts:
+              - .node_modules/**              
         # - step:
         #     name: Run SonarCloud
         #     script:
@@ -49,4 +50,3 @@
             name: Run SonarCloud
             script:
               - pipe: sonarsource/sonarcloud-scan:2.0.0
-              - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
