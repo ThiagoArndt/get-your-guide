@@ -1,29 +1,6 @@
-  # This is an example Starter pipeline configuration
-  # Use a skeleton to build, test and deploy using manual and parallel steps
-  # -----
-  # You can specify a custom docker image from Docker Hub as your build environment.
-
-  image: atlassian/default-image:3
 
   clone:
     depth: full
-
-
-  # definitions:
-  #   caches:
-  #     sonar: ~/.sonar/cache
-  #   steps:
-  #   - step: &build-test-sonarcloud
-  #       name: Build, test and analyze on SonarCloud
-  #       caches:
-  #         - https://confluence.atlassian.com/bitbucket/caching-dependencies-895552876.html
-  #         - sonar
-  #       script:
-  #         - pipe: sonarsource/sonarcloud-scan:2.0.0
-  #   - step: &check-quality-gate-sonarcloud
-  #       name: Check the Quality Gate on SonarCloud
-  #       script:
-  #         - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
 
   image: node:20.11.0
   pipelines:
@@ -49,17 +26,16 @@
             name: Zip .next Folder
             script:
               - zip -r website.zip .next
-            # Assuming .next and build folders are in the same directory
-            # If they're not, adjust the paths accordingly
-
+              
         - step:
             name: Deploy to Netlify
             deployment: production
             script:
-              - curl -H "Content-Type: application/zip" \
-                     -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-                    --data-binary "@website.zip" \
-                    https://api.netlify.com/api/v1/sites/mysite.netlify.app/deploys
+              - |
+                curl -H "Content-Type: application/zip" \
+                   -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
+                   --data-binary "@website.zip" \
+                   https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
 
     pull-requests:
       '**':
