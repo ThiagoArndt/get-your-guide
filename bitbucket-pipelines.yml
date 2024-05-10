@@ -39,10 +39,10 @@
             deployment: production
             script:
               - |
-                curl --location 'https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys' \
-                  --header 'Content-Type: application/zip' \
-                  --header 'Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249' \
-                  --data '@website.zip'
+                curl -H "Content-Type: application/zip" \
+                   -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
+                   --data-binary "@website.zip" \
+                   https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
 
     pull-requests:
       '**':
