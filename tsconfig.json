@@ -21,10 +21,19 @@
         "name": "next"
       }
     ],
+    "baseUrl": "src", 
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@app/*": ["app/*"],
+      "@api/*": ["app/api/*"],
+      "@components/*": ["components/*"],
+      "@containers/*": ["containers/*"],    
+      "@db/*": ["db/*"],   
+      "@hooks/*": ["hooks/*"],   
+      "@libs/*": ["libs/*"],
+      "@services/*": ["services/*"],    
+      "@store/*": ["store/*"], 
+      "@styles/*": ["styles/*"], 
+      "@types/*": ["types/*"], 
     }
   },
   "include": [
