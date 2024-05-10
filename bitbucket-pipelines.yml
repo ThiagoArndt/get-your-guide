@@ -23,14 +23,14 @@
               - npm install
               - npm run build
             artifacts:
-              - .next/**
+              - out/**
 
 
         - step:
             name: Zip .next Folder
             script:
               - apt-get update && apt-get install -y zip
-              - zip -r website.zip .next/
+              - zip -r website.zip out/
             artifacts:
               - website.zip
 
@@ -39,10 +39,10 @@
             deployment: production
             script:
               - |
-                curl -H "Content-Type: application/zip" \
-                   -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-                   --data-binary "@website.zip" \
-                   https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
+                curl --location 'https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys' \
+                  --header 'Content-Type: application/zip' \
+                  --header 'Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249' \
+                  --data '@website.zip'
 
     pull-requests:
       '**':
@@ -50,3 +50,4 @@
             name: Run SonarCloud
             script:
               - pipe: sonarsource/sonarcloud-scan:2.0.0
+
