@@ -28,8 +28,8 @@
             image: amazon/aws-cli
             script:
             - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
-            - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-            - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            # - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            # - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
