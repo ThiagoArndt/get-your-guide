@@ -12,7 +12,7 @@
             script:
               - npm install
             artifacts:
-              - .node_modules/**              
+              - node_modules/**              
         # - step:
         #     name: Run SonarCloud
         #     script:
