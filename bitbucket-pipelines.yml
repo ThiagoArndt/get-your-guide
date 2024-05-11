@@ -18,9 +18,9 @@
             script:
               - npm install
               - npm run build
-              - tar -czvf build2.tar.gz out
+              - tar -czvf build.tar.gz out
             artifacts:
-              - build2.tar.gz
+              - build.tar.gz
 
 
         - step:
@@ -33,14 +33,14 @@
               # - rm -rf .aws/
               # - rm -f awscliv2.zip 
              
-            - aws s3 cp build2.tar.gz s3://$S3_BUCKET/bundles/
+            - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
                 --deployment-config-name $DEPLOYMENT_CONFIG_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
-                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build2.tar.gz
+                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
 
 
