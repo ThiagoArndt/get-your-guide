@@ -39,7 +39,7 @@
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
 
-        #tes
+        
         # - step:
         #     name: Deploy to Netlify
         #     deployment: production
