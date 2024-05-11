@@ -21,11 +21,10 @@
         - step:
             name: Build Project
             script:
-              - npm install
               - npm run build
-              - tar -czvf build.tar.gz out
+              - tar -czvf build2.tar.gz out
             artifacts:
-              - build.tar.gz
+              - build2.tar.gz
 
 
         - step:
@@ -45,7 +44,7 @@
                 --deployment-config-name $DEPLOYMENT_CONFIG_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
-                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
+                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build2.tar.gz
 
 
 

@@ -3,3 +3,9 @@ os: linux
 files:
   - source: "./out"
   destination: "/var/www/html"
+
+hooks:
+
+  BeforeInstall:
+
+  AfterInstall:
