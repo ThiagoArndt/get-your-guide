@@ -16,24 +16,18 @@
         - step:
             name: Create Scripts
             script:
-              # Create out folder if it doesn't exist
- 
-
               # Create before_install.sh script
-              echo '#!/bin/bash' > before_install.sh
-              echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
+              - echo '#!/bin/bash' > before_install.sh
+              - echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
               
               # Create after_install.sh script
-              echo '#!/bin/bash' > after_install.sh
-              echo 'cd /var/www/html' >> after_install.sh
-              echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
+              - echo '#!/bin/bash' > after_install.sh
+              - echo 'cd /var/www/html' >> after_install.sh
+              - echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
 
               # Make scripts executable
-              chmod +x before_install.sh
-              chmod +x after_install.sh
-
-              # Move scripts to out folder
-              
+              - chmod +x before_install.sh
+              - chmod +x after_install.sh
 
             artifacts:
               - before_install.sh
