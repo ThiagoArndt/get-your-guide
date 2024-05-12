@@ -14,11 +14,39 @@
         #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
         - step:
+            name: Create Scripts
+            script:
+              # Create out folder if it doesn't exist
+ 
+
+              # Create before_install.sh script
+              echo '#!/bin/bash' > before_install.sh
+              echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
+              
+              # Create after_install.sh script
+              echo '#!/bin/bash' > after_install.sh
+              echo 'cd /var/www/html' >> after_install.sh
+              echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
+
+              # Make scripts executable
+              chmod +x before_install.sh
+              chmod +x after_install.sh
+
+              # Move scripts to out folder
+              
+
+            artifacts:
+              - before_install.sh
+              - after_install.sh
+
+        - step:
             name: Install Dependencies & Build Project
             script:
               - npm install
               - npm run build
-              - cp appspec.yml out/
+              - mkdir -p out/scripts # Create Scripts folder
+              - cp before_install.sh after_install.sh out/scripts #Copy scripts to build folder
+              - cp appspec.yml out/ #Copy appspec to build folder
               - tar -czvf build.tar.gz out
             artifacts:
               - build.tar.gz
