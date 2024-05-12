@@ -7,22 +7,40 @@
   pipelines:
     branches:
       main:
-        - step:
-            name: Install Node.js 20 and dependencies
-            script:
-              - npm install
-            artifacts:
-              - .node_modules/**              
+        
         # - step:
         #     name: Run SonarCloud
         #     script:
         #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
         - step:
-            name: Build Project
+            name: Create Scripts
+            script:
+              # Create before_install.sh script
+              - echo '#!/bin/bash' > before_install.sh
+              - echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
+              
+              # Create after_install.sh script
+              - echo '#!/bin/bash' > after_install.sh
+              - echo 'cd /var/www/html' >> after_install.sh
+              - echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
+
+              # Make scripts executable
+              - chmod +x before_install.sh
+              - chmod +x after_install.sh
+
+            artifacts:
+              - before_install.sh
+              - after_install.sh
+
+        - step:
+            name: Install Dependencies & Build Project
             script:
               - npm install
               - npm run build
+              - mkdir -p out/scripts # Create Scripts folder
+              - cp before_install.sh after_install.sh out/scripts #Copy scripts to build folder
+              - cp appspec.yml out/ #Copy appspec to build folder
               - tar -czvf build.tar.gz out
             artifacts:
               - build.tar.gz
@@ -32,23 +50,15 @@
             name: Deployment
             image: amazon/aws-cli
             script:
-              # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-              # - unzip awscliv2.zip
-              # - ./aws/install
-              # - rm -rf .aws/
-              # - rm -f awscliv2.zip 
-             
             - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
-                --deployment-config-name $DEPLOYMENT_CONFIG_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
-
-
+        #
         # - step:
         #     name: Deploy to Netlify
         #     deployment: production
