@@ -43,22 +43,22 @@
               - cp before_install.sh after_install.sh build/scripts #Copy scripts to build folder
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp -r .next build/ #Copy .next to build folder
-              - tar -czvf build.tar.gz nextBuild
+              - tar -czvf build.tar.gz build
             artifacts:
-              - nextBuild.tar.gz
+              - build.tar.gz
 
 
         - step:
             name: Deployment
             image: amazon/aws-cli
             script:
-            - aws s3 cp nextBuild.tar.gz s3://$S3_BUCKET/bundles/
+            - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
-                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/nextBuild.tar.gz
+                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
         #
         # - step:
