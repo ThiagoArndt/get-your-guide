@@ -16,18 +16,25 @@
         - step:
             name: Create Scripts
             script:
-              # Create before_install.sh script
+            # Create before_install.sh script
               - echo '#!/bin/bash' > before_install.sh
-              - echo 'sudo lsof -ti :3000 | xargs sudo kill -9' >> before_install.sh  # Replace 3000 with your port number
-              
+              - echo 'PORT=3000' >> before_install.sh
+              - echo 'PIDS=$(sudo lsof -ti :$PORT)' >> before_install.sh
+              - echo 'if [ -n "$PIDS" ]; then' >> before_install.sh
+              - echo '    echo "Killing processes: $PIDS"' >> before_install.sh
+              - echo '    sudo kill -9 $PIDS' >> before_install.sh
+              - echo 'else' >> before_install.sh
+              - echo '    echo "No processes found listening on port $PORT"' >> before_install.sh
+              - echo 'fi' >> before_install.sh
+              # Make before_install.sh executable
+              - chmod +x before_install.sh
+
               # Create after_install.sh script
               - echo '#!/bin/bash' > after_install.sh
-              - echo 'cd /path/to/your/project' >> after_install.sh
               - echo 'next start > /dev/null 2>&1 &' >> after_install.sh  # Restart the server
-
-              # Make scripts executable
-              - chmod +x before_install.sh
+              # Make after_install.sh executable
               - chmod +x after_install.sh
+              
 
             artifacts:
               - before_install.sh
