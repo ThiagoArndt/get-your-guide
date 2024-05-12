@@ -18,12 +18,12 @@
             script:
               # Create before_install.sh script
               - echo '#!/bin/bash' > before_install.sh
-              - echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
+              - echo 'sudo lsof -ti :3000 | xargs sudo kill -9' >> before_install.sh  # Replace 3000 with your port number
               
               # Create after_install.sh script
               - echo '#!/bin/bash' > after_install.sh
-              - echo 'cd /var/www/html' >> after_install.sh
-              - echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
+              - echo 'cd /path/to/your/project' >> after_install.sh
+              - echo 'next start > /dev/null 2>&1 &' >> after_install.sh  # Restart the server
 
               # Make scripts executable
               - chmod +x before_install.sh
@@ -38,25 +38,27 @@
             script:
               - npm install
               - npm run build
-              - mkdir -p out/scripts # Create Scripts folder
-              - cp before_install.sh after_install.sh out/scripts #Copy scripts to build folder
-              - cp appspec.yml out/ #Copy appspec to build folder
-              - tar -czvf build.tar.gz out
+              - mkdir build
+              - mkdir -p build/scripts # Create Scripts folder
+              - cp before_install.sh after_install.sh build/scripts #Copy scripts to build folder
+              - cp appspec.yml build/ #Copy appspec to build folder
+              - cp .next build/ #Copy .next to build folder
+              - tar -czvf build.tar.gz nextBuild
             artifacts:
-              - build.tar.gz
+              - nextBuild.tar.gz
 
 
         - step:
             name: Deployment
             image: amazon/aws-cli
             script:
-            - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
+            - aws s3 cp nextBuild.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
-                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
+                --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/nextBuild.tar.gz
 
         #
         # - step:
