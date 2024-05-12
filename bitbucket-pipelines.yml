@@ -42,7 +42,7 @@
               - mkdir -p build/scripts # Create Scripts folder
               - cp before_install.sh after_install.sh build/scripts #Copy scripts to build folder
               - cp appspec.yml build/ #Copy appspec to build folder
-              - cp .next build/ #Copy .next to build folder
+              - cp -r .next build/ #Copy .next to build folder
               - tar -czvf build.tar.gz nextBuild
             artifacts:
               - nextBuild.tar.gz
