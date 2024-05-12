@@ -18,6 +18,7 @@
             script:
               - npm install
               - npm run build
+              - cp appspec.yml out/
               - tar -czvf build.tar.gz out
             artifacts:
               - build.tar.gz
