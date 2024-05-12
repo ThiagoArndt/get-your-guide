@@ -20,8 +20,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb))
+  background: #F6F7FB
 }
 
 main {

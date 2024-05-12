@@ -2,15 +2,17 @@
 
 // Import necessary modules
 import Link from "next/link";
-
+import Image from "next/image";
 // Define the Header component
 export default function Header() {
   return (
-    <header className="bg-gray-900 text-white py-4 sticky top-0 z-50">
-      {/* Header container */}
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Website title */}
-        <h1 className="text-xl font-semibold">Jordan Thirkle</h1>
+    <header className="text-black sticky top-0">
+      <div className="py-10 px-28 flex justify-between">
+        <div>
+          <Image src="/logo.png" width={500} height={500} alt="Picture of the author" />
+          <h1 className="text-xl font-semibold">Jordan Thirkle</h1>
+        </div>
+
         {/* Navigation menu */}
         <nav className="hidden md:block">
           <ul className="flex gap-x-6">

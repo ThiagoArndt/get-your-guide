@@ -19,10 +19,13 @@ const config = {
     },
     extend: {
       colors: {
+        blackApp : "#292929",
+        greenApp: "#36AC0D",
+        greyApp: "#717171",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "#F6F7FB",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
