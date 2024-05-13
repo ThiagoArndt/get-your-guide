@@ -30,7 +30,6 @@
 
               # Create after_install.sh script
               - echo '#!/bin/bash' > after_install.sh
-              - echo 'cd ..' > after_install.sh
               - echo 'next start' >> after_install.sh  # Restart the server
               # Make after_install.sh executable
               - chmod +x after_install.sh
@@ -46,8 +45,7 @@
               - npm install
               - npm run build
               - mkdir build
-              - mkdir -p build/scripts # Create Scripts folder
-              - cp before_install.sh after_install.sh build/scripts #Copy scripts to build folder
+              - cp before_install.sh after_install.sh build/ #Copy scripts to build folder
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp -r .next build/ #Copy .next to build folder
               - tar -czvf build.tar.gz build
