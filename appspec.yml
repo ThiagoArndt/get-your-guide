@@ -10,6 +10,6 @@ hooks:
       timeout: 300
       runas: root
   AfterInstall:
-    - location: appstart_install.sh
+    - location: after_install.sh
       timeout: 300
       runas: root

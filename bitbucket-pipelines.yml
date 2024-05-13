@@ -19,7 +19,7 @@
               - npm install
               - npm run build
               - mkdir build
-              - cp devops/before_install.sh devops/appstart_install.sh build/ #Copy scripts to build folde
+              - cp devops/before_install.sh devops/after_install.sh build/ #Copy scripts to build folde
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp package.json package-lock.json build/ #Copy package.json to build folder 
               - cp -r .next build/ #Copy .next to build folder
