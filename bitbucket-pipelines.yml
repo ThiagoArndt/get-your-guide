@@ -23,14 +23,13 @@
               - echo 'if [ -n "$PIDS" ]; then' >> before_install.sh
               - echo '    sudo kill -9 $PIDS' >> before_install.sh
               - echo 'else' >> before_install.sh
-              - echo '    echo "No processes found listening on port $PORT"' >> before_install.sh
               - echo 'fi' >> before_install.sh
               # Make before_install.sh executable
               - chmod +x before_install.sh
 
               # Create after_install.sh script
               - echo '#!/bin/bash' > after_install.sh
-              - echo 'next start > /dev/null 2>&1 &' >> after_install.sh  # Restart the server
+              - echo 'next start' >> after_install.sh  # Restart the server
               # Make after_install.sh executable
               - chmod +x after_install.sh
               
