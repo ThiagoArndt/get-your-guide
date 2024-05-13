@@ -14,36 +14,12 @@
         #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
         - step:
-            name: Create Scripts
-            script:
-            # Create before_install.sh script
-              - echo '#!/bin/bash' > before_install.sh
-              - echo 'npm install' > before_install.sh
-              - echo 'npm install pm2 -g' before_install.sh
-              - echo 'pm2 stop all' > before_install.sh
-              - echo 'pm2 delete all' > before_install.sh
-              # Make before_install.sh executable  
-              - chmod +x before_install.sh
-
-              # Create after_install.sh script
-              - echo '#!/bin/bash' > appstart_install.sh
-              - echo 'npm install' > appstart_install.sh
-              - echo 'pm2 start npm --name nextjs-apps -- run start -- -p 3000' > appstart_install.sh
-              # Make after_install.sh executable
-              - chmod +x appstart_install.sh
-              
-
-            artifacts:
-              - before_install.sh
-              - appstart_install.sh
-
-        - step:
             name: Install Dependencies & Build Project
             script:
               - npm install
               - npm run build
               - mkdir build
-              - cp before_install.sh appstart_install.sh build/ #Copy scripts to build folde
+              - cp devops/before_install.sh devops/appstart_install.sh build/ #Copy scripts to build folde
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp package.json package-lock.json build/ #Copy package.json to build folder 
               - cp -r .next build/ #Copy .next to build folder

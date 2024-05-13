@@ -6,10 +6,10 @@ files:
 
 hooks:
   BeforeInstall:
-    - location: /before_install.sh
+    - location: before_install.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: /appstart_install.sh
+    - location: appstart_install.sh
       timeout: 300
       runas: root
