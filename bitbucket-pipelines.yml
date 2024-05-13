@@ -18,7 +18,7 @@
             script:
             # Create before_install.sh script
               - echo '#!/bin/bash' > before_install.sh
-              - echo 'npm install' > after_install.sh
+              - echo 'npm install' > before_install.sh
               - echo 'PORT=3000' >> before_install.sh
               - echo 'PIDS=$(sudo lsof -ti :$PORT)' >> before_install.sh
               - echo 'if [ -n "$PIDS" ]; then' >> before_install.sh
@@ -30,17 +30,16 @@
               - chmod +x before_install.sh
 
               # Create after_install.sh script
-              - echo '#!/bin/bash' > after_install.sh
-              - echo 'cd /var/www/html' > after_install.sh
-              - echo 'npm install' > after_install.sh
-              - echo 'npm start' > after_install.sh
+              - echo '#!/bin/bash' > appstart_install.sh
+              - echo 'npm install' > appstart_install.sh
+              - echo 'npm start' > appstart_install.sh
               # Make after_install.sh executable
-              - chmod +x after_install.sh
+              - chmod +x appstart_install.sh
               
 
             artifacts:
               - before_install.sh
-              - after_install.sh
+              - appstart_install.sh
 
         - step:
             name: Install Dependencies & Build Project
@@ -48,7 +47,7 @@
               - npm install
               - npm run build
               - mkdir build
-              - cp before_install.sh after_install.sh build/ #Copy scripts to build folde
+              - cp before_install.sh appstart_install.sh build/ #Copy scripts to build folde
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp package.json package-lock.json build/ #Copy package.json to build folder 
               - cp -r .next build/ #Copy .next to build folder
