@@ -59,13 +59,12 @@
             - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
-                --application-name $APPLICATION_NAME \
-                --deployment-config-name $DEPLOYMENT_CONFIG_NAME \
+                --application-name $APPLICATION_NAME \         
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
-        #
+        #--deployment-config-name $DEPLOYMENT_CONFIG_NAME \
         # - step:
         #     name: Deploy to Netlif
         #     deployment: production
