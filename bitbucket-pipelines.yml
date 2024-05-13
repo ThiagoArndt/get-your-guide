@@ -32,6 +32,9 @@
               # Create after_install.sh script
               - echo '#!/bin/bash' > appstart_install.sh
               - echo 'npm install' > appstart_install.sh
+              - echo 'pm2 stop all' > appstart_install.sh
+              - echo 'pm2 delete all' > appstart_install.sh
+              - echo 'pm2 start npm --name nextjs-apps -- run start -- -p 3000' > appstart_install.sh
               - echo 'npm start' > appstart_install.sh
               # Make after_install.sh executable
               - chmod +x appstart_install.sh
@@ -70,7 +73,7 @@
 
         #
         # - step:
-        #     name: Deploy to Netlify
+        #     name: Deploy to Netlif
         #     deployment: production
         #     script:
         #       - |
