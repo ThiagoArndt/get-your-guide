@@ -21,7 +21,6 @@
               - echo 'PORT=3000' >> before_install.sh
               - echo 'PIDS=$(sudo lsof -ti :$PORT)' >> before_install.sh
               - echo 'if [ -n "$PIDS" ]; then' >> before_install.sh
-              - echo '    echo "Killing processes: $PIDS"' >> before_install.sh
               - echo '    sudo kill -9 $PIDS' >> before_install.sh
               - echo 'else' >> before_install.sh
               - echo '    echo "No processes found listening on port $PORT"' >> before_install.sh
