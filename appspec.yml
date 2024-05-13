@@ -7,4 +7,4 @@ files:
 hooks:
   AfterInstall:
     - location: after_install.sh
-      runas: ec2-user
+      runas: root

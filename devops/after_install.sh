@@ -8,6 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 cd /var/www/html
 npm install
 npm install pm2 -g
+pm2 delete all
 pm2 start npm --name nextjs-apps -- run start -- -p 3000
+pm2 restart nextjs-apps
 
               
