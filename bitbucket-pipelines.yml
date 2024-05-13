@@ -25,7 +25,7 @@
               - echo 'else' >> before_install.sh
               - echo '    echo "No processes found listening on port $PORT"' >> before_install.sh
               - echo 'fi' >> before_install.sh
-              # Make before_install.sh executable 
+              # Make before_install.sh executable  
               - chmod +x before_install.sh
 
               # Create after_install.sh script
