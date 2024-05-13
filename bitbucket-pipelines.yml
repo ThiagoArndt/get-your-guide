@@ -30,6 +30,7 @@
 
               # Create after_install.sh script
               - echo '#!/bin/bash' > after_install.sh
+              - echo 'cd ..' > after_install.sh
               - echo 'next start' >> after_install.sh  # Restart the server
               # Make after_install.sh executable
               - chmod +x after_install.sh
