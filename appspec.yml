@@ -3,8 +3,23 @@ os: linux
 files:
   - source: /
     destination: /var/www/html
+permissions:
+   - object: /var/www/html
+     pattern: "**"
+     owner: root
+     group: www-data
+     mode: 644
+     type:
+       - file
+   - object: /var/www/html
+     pattern: "**"
+     owner: root
+     group: www-data
+     mode: 755
+     type:
+       - directory
 hooks:
   AfterInstall:
     - location: devops/after_install.sh
-      timeout: 200
+      timeout: 400
       runas: root
