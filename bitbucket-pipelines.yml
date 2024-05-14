@@ -8,10 +8,10 @@
     branches:
       main:
         
-        # - step:
-        #     name: Run SonarCloud
-        #     script:
-        #       - pipe: sonarsource/sonarcloud-scan:2.0.0
+        - step:
+            name: Run SonarCloud
+            script:
+              - pipe: sonarsource/sonarcloud-scan:2.0.0
 
         - step:
             name: Install Dependencies & Build Project

@@ -6,10 +6,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 cd /var/www/html
-npm install pm2 -g
-pm2 delete all
-pm2 start npm --name nextjs-apps -- run start -- -p 3000
-
+fuser -k 3000/tcp
+npm run start
 
 
               
