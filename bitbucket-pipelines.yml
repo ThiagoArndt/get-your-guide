@@ -19,6 +19,7 @@
               - npm install
               - npm run build
               - mkdir build
+              - sudo chmod +x devops/after_install.sh
               - cp devops/after_install.sh build/ #Copy scripts to build folde
               - cp appspec.yml build/ #Copy appspec to build folder
               - cp package.json package-lock.json build/ #Copy package.json to build folder 
