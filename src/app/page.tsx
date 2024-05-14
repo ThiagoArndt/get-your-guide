@@ -1,7 +1,13 @@
+import HeroSection from "@containers/home-page/hero-section";
+
 export default function Home() {
   return (
-    <div>
-      <p>Hello</p>
-    </div>
+    <>
+      <HeroSection />
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+    </>
   );
 }

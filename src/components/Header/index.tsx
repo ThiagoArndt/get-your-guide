@@ -3,50 +3,63 @@
 // Import necessary modules
 import Link from "next/link";
 import Image from "next/image";
+import Button from "@components/Button";
 // Define the Header component
 export default function Header() {
   return (
-    <header className="text-black sticky top-0">
-      <div className="py-10 px-28 flex justify-between">
-        <div>
-          <Image src="/logo.png" width={500} height={500} alt="Picture of the author" />
-          <h1 className="text-xl font-semibold">Jordan Thirkle</h1>
-        </div>
+    <header className="text-black top-0">
+      <div className="py-4 px-28 flex justify-between">
+        <div className="flex flex-row items-center grow gap-32">
+          <div className="flex flex-row gap-3 items-center">
+            <Image
+              className="relative"
+              quality={100}
+              src="/logo.png"
+              width={50}
+              height={0}
+              style={{ width: "auto", height: "80%" }}
+              objectFit="contain"
+              alt=""
+            />
+            <h1 className="text-3xl font-extrabold">Company</h1>
+          </div>
 
-        {/* Navigation menu */}
-        <nav className="hidden md:block">
-          <ul className="flex gap-x-6">
-            {/* Navigation links */}
-            <li>
-              <Link href="/" className="hover:text-gray-300">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-gray-300">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/portfolio" className="hover:text-gray-300">
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-gray-300">
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:text-gray-300">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
+          {/* Navigation menu */}
+          <nav className="hidden md:block">
+            <ul className="flex gap-x-3">
+              {/* Navigation links */}
+              <li>
+                <Link href="/" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/portfolio" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                  Portfolio
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
         {/* Social media icons */}
-        <div className="hidden md:block">
-          <SocialIcons />
+        <div className="flex grow items-center justify-end gap-4">
+          <Button bgColor="white" text="Login" />
+          <Button bgColor="black" text="Registre-se" />
         </div>
         {/* Add Mobile Navigation Toggle Here */}
       </div>

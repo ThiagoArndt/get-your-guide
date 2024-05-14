@@ -22,6 +22,7 @@ const config = {
         blackApp : "#292929",
         greenApp: "#36AC0D",
         greyApp: "#717171",
+        lightGreyApp: "#EDEDED",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
