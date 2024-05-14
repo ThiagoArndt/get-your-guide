@@ -18,12 +18,11 @@
             script:
               - npm install
               - npm run build
-              # - chmod +x devops/after_install.sh
-              # - cp devops/after_install.sh build/ #Copy scripts to build folde
-              - cp appspec.yml build/ #Copy appspec to build folder
-              - cp package.json package-lock.json build/ #Copy package.json to build folder 
-              - cp -r .next build/ #Copy .next to build folde
-              - tar -czvf build.tar.gz build
+              - chmod +x devops/after_install.sh
+              # - cp appspec.yml build/ #Copy appspec to build folder
+              # - cp package.json package-lock.json build/ #Copy package.json to build folder 
+              # - cp -r .next build/ #Copy .next to build folder
+              - tar -cvzf build.tar.gz devops/after_install.sh appspec.yml package.json .next
             artifacts:
               - build.tar.gz
 
