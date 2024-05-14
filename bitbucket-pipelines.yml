@@ -37,6 +37,7 @@
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
+                --deployment-config-name $DEPLOYMENT_CONFIG_NAME
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
