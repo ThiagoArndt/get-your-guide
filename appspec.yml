@@ -21,5 +21,4 @@ permissions:
 hooks:
   AfterInstall:
     - location: devops/after_install.sh
-      timeout: 400
       runas: root
