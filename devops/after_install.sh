@@ -8,21 +8,7 @@ export NVM_DIR="$HOME/.nvm"
 # Change to the application directory
 cd /var/www/html
 
+sudo fuser -k 3000/tcp
+
 # Start the application
-npm run start &
-
-# Wait until the application is running on port 3000
-echo "Waiting for the application to start..."
-while ! nc -z localhost 3000; do
-    sleep 1
-done
-
-echo "Application started successfully on port 3000."
-
-# Optionally, you can add additional commands here to perform after the application starts.
-# For example:
-# echo "Performing additional tasks..."
-# <your_additional_commands_here>
-
-# Exit the script
-exit 0
+nohup npm run start &
