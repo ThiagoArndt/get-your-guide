@@ -10,5 +10,8 @@ cd /var/www/html
 
 sudo fuser -k 3000/tcp
 
-# Start the application
-nohup npm run start &
+# Iniciar a aplicação em segundo plano com nohup e redirecionar saída
+nohup npm run start > nohup.out 2>&1 &
+
+# Garantir que o script termina corretamente
+exit 0
