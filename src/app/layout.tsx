@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={nunito.className}>
         <Header />
-        <main className="px-10">{children}</main>
+        <main className="px-20">{children}</main>
         <Footer />
         <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD67pfU2JP1ZlJ9MLIfhy6vykcl-ZJ0MNI&libraries=places" />
       </body>

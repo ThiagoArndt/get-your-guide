@@ -1,7 +1,14 @@
-import SelectTripInfo from "@components/SelectTripInfo";
-import React from "react";
+"use client";
+
+import SelectTripInfo from "@components/TripSelectCard";
+import React, { useState } from "react";
 import Image from "next/image";
 function HeroSection() {
+  const [postAddress, setPostAddress] = useState("");
+  const [checkIn, setCheckIn] = useState<Date | undefined>(undefined);
+  const [checkOut, setCheckOut] = useState<Date | undefined>(undefined);
+  const [people, setPeople] = useState<number>(0);
+
   return (
     <div className="flex h-svh relative px-20 pt-32 pb-16">
       <div className="z-10 text-white flex flex-col justify-between w-full">
@@ -15,7 +22,16 @@ function HeroSection() {
             laoreet.
           </p>
         </div>
-        <SelectTripInfo />
+        <SelectTripInfo
+          checkIn={checkIn}
+          checkOut={checkOut}
+          people={people}
+          postAddress={postAddress}
+          setCheckIn={setCheckIn}
+          setCheckOut={setCheckOut}
+          setPeople={setPeople}
+          setPostAddress={setPostAddress}
+        />
       </div>
 
       <Image
