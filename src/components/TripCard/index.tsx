@@ -7,14 +7,15 @@ interface TripCardProps {
   image: string;
   destination: string;
   distance: number;
-  check_in_date: string;
-  check_out_date: string;
+  checkInDate: string;
+  checkOutDate: string;
   price: number;
-  max_people: number;
+  maxPeople: number;
 }
 
-function TripCard(props: TripCardProps) {
-  const { check_in_date, check_out_date, destination, distance, image, max_people, price } = props;
+function TripCard(props: Readonly<TripCardProps>) {
+  const { checkInDate, checkOutDate, destination, distance, image, maxPeople, price } = props;
+
   return (
     <div className="p-4 w-full flex flex-col gap-2 rounded-3xl py-10 px-5 cursor-pointer hover:bg-blackApp hover:bg-opacity-5">
       <div className="relative w-full h-[300px]">
@@ -27,9 +28,9 @@ function TripCard(props: TripCardProps) {
       </div>
       <p className="text-greyApp font-light text-lg">{distance}km de distância</p>
       <p className="text-greyApp font-light text-lg">
-        {getInfoDateFormatter(new Date(check_in_date), new Date(check_out_date))}
+        {getInfoDateFormatter(new Date(checkInDate), new Date(checkOutDate))}
       </p>
-      <p className="text-greyApp font-light text-lg">{max_people.toString()} Pessoas</p>
+      <p className="text-greyApp font-light text-lg">{maxPeople.toString()} Pessoas</p>
       <p className="text-black text-lg">
         <span className="font-extrabold text-2xl">R${price.toString()}</span> noite
       </p>

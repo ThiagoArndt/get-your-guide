@@ -1,30 +1,8 @@
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { notFound } from "next/navigation";
-
-const dummyData: Trip[] = [
-  {
-    id: 1,
-    image: "/placeholder-image.jpg",
-    destination: "Urubici, Brasil",
-    distance: 300,
-    checkInDate: "2024-05-12T12:00:00",
-    checkOutDate: "2024-10-15T12:00:00",
-    price: 320,
-    maxPeople: 4,
-  },
-  {
-    id: 2,
-    image: "/placeholder-image.jpg",
-    destination: "Urubici, Brasil",
-    distance: 300,
-    checkInDate: "2024-05-12T12:00:00",
-    checkOutDate: "2024-10-15T12:00:00",
-    price: 320,
-    maxPeople: 4,
-  },
-  // Add more data objects as needed
-];
-
+import Image from "next/image";
+import dummyData from "@libs/utils/dummy_data.json";
+import coolImage1 from "../../../public/cool-image1.jpg";
 async function Page({ params }: Readonly<{ params: Params }>) {
   const data: Trip | undefined = await getData({ params });
 
@@ -32,7 +10,18 @@ async function Page({ params }: Readonly<{ params: Params }>) {
     return <div>Loading...</div>;
   }
 
-  return <p>{data.destination}</p>;
+  return (
+    <div className="flex flex-row">
+      <div className="flex flex-col w-[800px] bg-black">
+        <h1>oioi</h1>
+      </div>
+      <div className="w-full">
+        <div className="relative w-full h-[300px]">
+          <Image layout="fill" objectFit="cover" src={coolImage1} alt="" />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const getData = async ({ params }: Readonly<{ params: Params }>) => {
