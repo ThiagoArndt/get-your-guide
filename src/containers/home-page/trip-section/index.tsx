@@ -17,7 +17,7 @@ function TripSection() {
       <h1 className="text-blackApp font-extrabold text-7xl">Acomodações</h1>
       <div className="grid grid-cols-4 gap-6 w-full">
         {jsonData.map((item, index) => (
-          <button onClick={() => handleRouting(item.id)} key={item.id}>
+          <button className="flex justify-start items-start" onClick={() => handleRouting(item.id)} key={item.id}>
             <TripCard
               checkInDate={item.checkInDate!}
               checkOutDate={item.checkOutDate!}
