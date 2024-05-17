@@ -5,7 +5,7 @@ import Button from "@components/Button";
 import * as Popover from "@radix-ui/react-popover";
 import PlacesAutocomplete from "react-places-autocomplete";
 import { Calendar } from "@components/Calendar";
-import { dateFormatter } from "@libs/utils/dateFormatter";
+import { dateFormatter } from "@services/dateFormatter";
 
 interface SelectTripInfo {
   setPostAddress: React.Dispatch<React.SetStateAction<string>>;

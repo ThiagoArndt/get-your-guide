@@ -7,7 +7,7 @@ import Button from "@components/Button";
 // Define the Header component
 export default function Header() {
   return (
-    <header className="text-black top-0">
+    <header className="text-black top-0 mb-10">
       <div className="py-4 px-28 flex justify-between">
         <div className="flex flex-row items-center grow gap-32">
           <div className="flex flex-row gap-3 items-center">

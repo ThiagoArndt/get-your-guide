@@ -2,7 +2,7 @@
 import React from "react";
 import jsonData from "@libs/utils/dummy_data.json";
 import Image from "next/image";
-import { getInfoDateFormatter } from "@libs/utils/dateFormatter";
+import { getInfoDateFormatter } from "@services/dateFormatter";
 import TripCard from "@components/TripCard";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +17,11 @@ function TripSection() {
       <h1 className="text-blackApp font-extrabold text-7xl">Acomodações</h1>
       <div className="grid grid-cols-4 gap-6 w-full">
         {jsonData.map((item, index) => (
-          <button className="flex justify-start items-start" onClick={() => handleRouting(item.id)} key={item.id}>
+          <button
+            className="flex justify-start items-start"
+            onClick={() => handleRouting(item.id)}
+            key={item.id}
+          >
             <TripCard
               checkInDate={item.checkInDate!}
               checkOutDate={item.checkOutDate!}

@@ -1,8 +1,11 @@
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+
 import dummyData from "@libs/utils/dummy_data.json";
-import coolImage1 from "../../../public/cool-image1.jpg";
+import ImagesSection from "@containers/selected-trip-page/images-section";
+import ContentSection from "@containers/selected-trip-page/content-section";
+import CommentsSection from "@containers/selected-trip-page/comments-section";
+
 async function Page({ params }: Readonly<{ params: Params }>) {
   const data: Trip | undefined = await getData({ params });
 
@@ -11,15 +14,12 @@ async function Page({ params }: Readonly<{ params: Params }>) {
   }
 
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-col w-[800px] bg-black">
-        <h1>oioi</h1>
+    <div className="flex flex-row w-full justify-between gap-40">
+      <div className="flex flex-col gap-10">
+        <ContentSection />
+        <CommentsSection />
       </div>
-      <div className="w-full">
-        <div className="relative w-full h-[300px]">
-          <Image layout="fill" objectFit="cover" src={coolImage1} alt="" />
-        </div>
-      </div>
+      <ImagesSection />
     </div>
   );
 }

@@ -23,6 +23,7 @@
     ],
     "baseUrl": "src", 
     "paths": {
+
       "@app/*": ["app/*"],
       "@api/*": ["app/api/*"],
       "@components/*": ["components/*"],

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { getInfoDateFormatter } from "@libs/utils/dateFormatter";
-
+import { getInfoDateFormatter } from "@services/dateFormatter";
+import { Heart } from "lucide-react";
 interface TripCardProps {
   image: string;
   destination: string;
@@ -19,7 +19,14 @@ function TripCard(props: Readonly<TripCardProps>) {
   return (
     <div className="p-4 w-full  flex flex-col gap-2 rounded-3xl py-10 px-5 cursor-pointer hover:bg-blackApp hover:bg-opacity-5">
       <div className="relative w-full h-[300px]">
-        <Image layout="fill" objectFit="cover" className="rounded-3xl " src={image} alt="" />
+        <Heart
+          onClick={(e) => {
+            e.stopPropagation();
+            return false;
+          }}
+          className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
+        />
+        <Image layout="fill" objectFit="cover" className="rounded-3xl z-10 " src={image} alt="" />
       </div>
 
       <div className="flex flex-row justify-between">
