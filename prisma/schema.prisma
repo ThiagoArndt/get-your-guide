@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type TripsComments {
+  comment String
+  rating  Int
+  userId  String @db.ObjectId
+}
+
+model agents {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_trips String[] @db.ObjectId
+  email         String
+  password      String
+  username      String
+}
+
+model trips {
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
+  comments     TripsComments[]
+  createdBy    String          @db.ObjectId
+  date_final   DateTime        @db.Date
+  date_initial DateTime        @db.Date
+  description  String
+  images       Bytes[]
+  price        Float
+  title        String
+}
+
+model users {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  liked_items String[] @db.ObjectId
+  password    String
+  username    String
+}

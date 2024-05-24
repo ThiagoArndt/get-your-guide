@@ -8,3 +8,15 @@ interface Trip {
     price?: number;
     maxPeople?: number;
   }
+
+interface SignUpInterface{
+  username: string,
+  email: string,
+  password: string,
+  role: RolesEnum,
+}
+
+enum RolesEnum{
+  USER,
+  AGENT,
+}
