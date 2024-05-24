@@ -1,13 +1,13 @@
 "use client";
 
-import SelectTripInfo from "@components/TripSelectCard";
+import SelectTripInfo from "@components/SelectTripInfo";
 import React, { useState } from "react";
 import Image from "next/image";
 function HeroSection() {
-  const [postAddress, setPostAddress] = useState("");
+  const [postAddress, setPostAddress] = useState<string | undefined>("");
   const [checkIn, setCheckIn] = useState<Date | undefined>(undefined);
   const [checkOut, setCheckOut] = useState<Date | undefined>(undefined);
-  const [people, setPeople] = useState<number>(0);
+  const [people, setPeople] = useState<number | undefined>(0);
 
   return (
     <div className="flex h-svh relative px-20 pt-32 pb-16">

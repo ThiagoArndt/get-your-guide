@@ -6,20 +6,23 @@ import * as Popover from "@radix-ui/react-popover";
 import PlacesAutocomplete from "react-places-autocomplete";
 import { Calendar } from "@components/Calendar";
 import { dateFormatter } from "@services/dateFormatter";
+import { useRouter } from "next/navigation";
 
 interface SelectTripInfo {
-  setPostAddress: React.Dispatch<React.SetStateAction<string>>;
+  setPostAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
   setCheckIn: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setCheckOut: React.Dispatch<React.SetStateAction<Date | undefined>>;
-  setPeople: React.Dispatch<React.SetStateAction<number>>;
+  setPeople: React.Dispatch<React.SetStateAction<number | undefined>>;
 
-  postAddress: string;
+  postAddress: string | undefined;
   checkIn: Date | undefined;
   checkOut: Date | undefined;
-  people: number;
+  people: number | undefined;
 }
 
 function SelectTripInfo(props: Readonly<SelectTripInfo>) {
+  const router = useRouter();
+
   const {
     setCheckIn,
     setCheckOut,
@@ -33,6 +36,16 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
 
   const handlePostAddressChange = (address: string) => {
     setPostAddress(address);
+  };
+
+  const handleSearch = () => {
+    const query = new URLSearchParams();
+    if (postAddress) query.append("address", postAddress);
+    if (checkIn) query.append("checkIn", dateFormatter(checkIn));
+    if (checkOut) query.append("checkOut", dateFormatter(checkOut));
+    if (people) query.append("people", people.toString());
+
+    router.push(`/trips?${query.toString()}`);
   };
 
   useEffect(() => {
@@ -73,7 +86,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
                         className: "outline-none w-full",
                       })}
                     />
-                    {postAddress.length > 0 && <button>x</button>}
+                    {postAddress!.length > 0 && <button>x</button>}
                   </div>
                   {suggestions.length > 0 && (
                     <div>
@@ -98,7 +111,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
       <div className="w-[1px] bg-blackApp h-full"></div>
       <Popover.Root>
         <Popover.Trigger>
-          <div className="w-[1px] bg-blackApp h-full"></div>
+          <div className="w-[1px] z-20 bg-blackApp h-full"></div>
           <div className="flex flex-col items-start cursor-pointer rounded-3xl px-4 py-2 hover:bg-lightGreyApp">
             <div className="flex flex-row gap-2">
               <h1 className="font-bold">Check-in</h1>
@@ -111,7 +124,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
         </Popover.Trigger>
 
         <Popover.Content
-          className="mt-10 rounded p-5 w-[360px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
+          className="mt-10 z-20 rounded p-5 w-[360px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
           sideOffset={5}
         >
           <Calendar
@@ -163,7 +176,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
               <h1 className="font-bold">Pessoas</h1>
               <FeatherIcon icon="chevron-down" className="text-greenApp" />
             </div>
-            {people > 0 ? `${people.toString()} pessoas` : "Quantas Pessoas?"}
+            {people! > 0 ? `${people!.toString()} pessoas` : "Quantas Pessoas?"}
           </div>
         </Popover.Trigger>
 
@@ -176,13 +189,13 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
               <input
                 className="w-full p-0 bg-transparent border-0 text-gray-800 focus:ring-0 dark:text-white"
                 type="text"
-                value={people.toString()}
+                value={people!.toString()}
                 data-hs-input-number-input=""
               />
             </div>
             <div className="flex justify-end items-center gap-x-1.5">
               <button
-                onClick={() => (people != 0 ? setPeople(people - 1) : null)}
+                onClick={() => (people != 0 ? setPeople(people! - 1) : null)}
                 type="button"
                 className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
                 data-hs-input-number-decrement=""
@@ -200,7 +213,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
                 </svg>
               </button>
               <button
-                onClick={() => setPeople(people + 1)}
+                onClick={() => setPeople(people! + 1)}
                 type="button"
                 className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
                 data-hs-input-number-increment=""
@@ -222,7 +235,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
           </div>
         </Popover.Content>
       </Popover.Root>
-      <Button bgColor="black" text="Pesquisar" />
+      <Button onClick={handleSearch} backgroundColor="black" text="Pesquisar" />
     </div>
   );
 }

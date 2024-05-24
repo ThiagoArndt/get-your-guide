@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import avatar from "../../../../public/avatar.webp";
 import { Calendar } from "lucide-react";
-import { useState } from "react";
 import Button from "@components/Button";
 function ContentSection() {
   const [isShowMore, setIsShowMore] = useState<boolean>(false);
@@ -12,7 +11,7 @@ function ContentSection() {
     setIsShowMore(!isShowMore);
   };
   return (
-    <div className="flex flex-col w-[600px] gap-10">
+    <div className="flex flex-col w-full gap-10">
       <div className="flex flex-col gap-4">
         <h1 className="font-bold text-4xl">Lorem ipsum sili dolor</h1>
         <div className="flex flex-row gap-3 items-center">
@@ -44,7 +43,8 @@ function ContentSection() {
           {isShowMore ? "Mostrar menos" : "Mostrar mais"}
         </button>
       </div>
-      <Button className="py-4 text-[16pt]" bgColor="black" text="Check-out" />
+      <Button className="py-4 text-[16pt]" backgroundColor="black" text="Check-out" />
+
       <div className="w-full bg-greyApp h-[1px] rounded-full"></div>
     </div>
   );

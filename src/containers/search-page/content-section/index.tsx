@@ -1,18 +1,16 @@
-"use client";
 import React from "react";
 import jsonData from "@libs/utils/dummy_data.json";
 import TripCard from "@components/TripCard";
 import { useRouter } from "next/navigation";
 
-function TripSection() {
+function ContentSection() {
   const router = useRouter();
   const handleRouting = (id: number) => {
     router.push(`/trips/${id}`); // Replace '/target-page' with your target route
   };
 
   return (
-    <div className="z-10 flex flex-col pt-32 gap-9">
-      <h1 className="text-blackApp font-extrabold text-7xl">Acomodações</h1>
+    <div className="flex flex-col pt-10 gap-9">
       <div className="grid grid-cols-4 gap-6 w-full">
         {jsonData.map((item, index) => (
           <button
@@ -36,4 +34,4 @@ function TripSection() {
   );
 }
 
-export default TripSection;
+export default ContentSection;

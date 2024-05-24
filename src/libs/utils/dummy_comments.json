@@ -1,0 +1,38 @@
+[
+    {
+        "id" : 1,
+        "username": "Marcos Relix",
+        "starRating" : 4,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    },
+    {
+        "id" : 2,
+        "username": "Marcos Relix",
+        "starRating" : 3,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    },
+    {
+        "id" : 3,
+        "username": "Marcos Relix",
+        "starRating" : 5,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    },
+    {
+        "id" : 4,
+        "username": "Marcos Relix",
+        "starRating" : 4,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    },
+    {
+        "id" : 5,
+        "username": "Marcos Relix",
+        "starRating" : 3,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    },
+    {
+        "id" : 6,
+        "username": "Marcos Relix",
+        "starRating" : 5,
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id arcu vitae neque interdum suscipit. Suspendisse nisl turpis, vulputate vel mi nec"
+    }
+]

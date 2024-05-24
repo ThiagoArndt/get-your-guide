@@ -4,6 +4,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@components/Button";
+import logo from "../../../public/logo.png";
+
 // Define the Header component
 export default function Header() {
   return (
@@ -14,7 +16,7 @@ export default function Header() {
             <Image
               className="relative"
               quality={100}
-              src="/logo.png"
+              src={logo}
               width={50}
               height={0}
               style={{ width: "auto", height: "80%" }}
@@ -58,8 +60,8 @@ export default function Header() {
         </div>
         {/* Social media icons */}
         <div className="flex grow items-center justify-end gap-4">
-          <Button bgColor="white" text="Login" />
-          <Button bgColor="black" text="Registre-se" />
+          <Button backgroundColor="white" text="Login" />
+          <Button backgroundColor="black" text="Registre-se" />
         </div>
         {/* Add Mobile Navigation Toggle Here */}
       </div>

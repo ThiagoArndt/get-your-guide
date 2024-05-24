@@ -4,7 +4,9 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+
       <TripSection />
+
       <br></br>
       <br></br>
       <br></br>

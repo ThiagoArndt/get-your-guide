@@ -26,7 +26,7 @@ function TripCard(props: Readonly<TripCardProps>) {
           }}
           className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
         />
-        <Image layout="fill" objectFit="cover" className="rounded-3xl z-10 " src={image} alt="" />
+        <Image layout="fill" objectFit="cover" className="rounded-3xl" src={image} alt="" />
       </div>
 
       <div className="flex flex-row justify-between">
