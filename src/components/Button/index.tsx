@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -7,11 +8,20 @@ interface ButtonProps
   > {
   text: string;
   backgroundColor: "white" | "black";
+  onPressed: React.MouseEventHandler<HTMLButtonElement> | undefined
 }
 
 function Button(props: Readonly<ButtonProps>) {
-  const { text, backgroundColor, className } = props;
-
+  const { text, backgroundColor, className, onPressed } = props;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleClick = () => {
+    if(isLoading == false){
+      setIsLoading(true)
+      onPressed
+      setIsLoading(false)
+    }
+   
+ }
   const baseClass = "text-lg font-bold rounded-full px-7 py-2";
   const backgroundClass =
     backgroundColor === "black"
@@ -23,8 +33,8 @@ function Button(props: Readonly<ButtonProps>) {
     : `${backgroundClass} ${baseClass}`;
 
   return (
-    <button {...props} className={combinedClassName}>
-      {text}
+    <button onClick={onPressed} {...props} className={combinedClassName}>
+      {isLoading ? 'Carregando...' : text}
     </button>
   );
 }

@@ -2,7 +2,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { db as prisma } from "@db/client";
 import bcrypt from "bcrypt";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
   }
@@ -19,10 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ error: "Usuário já existe" });
   }
 
+  let userData;
+
   try {
     switch (role) {
       case RolesEnum.AGENT:
-        prisma.agents.create({
+        userData = await prisma.agents.create({
           data: {
             email: email,
             password: await bcrypt.hash(password, 10),
@@ -31,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
         break;
       case RolesEnum.USER:
-        prisma.users.create({
+        userData = await prisma.users.create({
           data: {
             email: email,
             password: await bcrypt.hash(password, 10),
@@ -43,7 +48,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(401).json({ error: "Tipo de usuário não definido" });
     }
 
-    return res.status(200).json({ error: "Usuário registrado com sucesso!" });
+    return res
+      .status(200)
+      .json({ message: "Usuário registrado com sucesso!", data: userData });
   } catch (error) {
     console.error("Erro ao se registrar:", error);
     return res.status(500).json({ error: "Erro no servidor" });

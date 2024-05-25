@@ -10,10 +10,6 @@ import bcrypt from "bcrypt";
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as any),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_CLIENTID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
     CredentialProvider({
       name: "credentials",
       credentials: {
@@ -52,7 +48,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Usuários não registrado através de credenciais");
         }
 
-        const matchPassword = await bcrypt.compare(credentials.password, selectedUser.password);
+        const matchPassword = await bcrypt.compare(
+          credentials.password,
+          selectedUser.password
+        );
         if (!matchPassword) throw new Error("Senha incorreta");
 
         return selectedUser;
@@ -62,9 +61,36 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    // async session({ session, token, user }) {
+    //   const getToken = await prisma.users.findFirst({
+    //     where: {
+    //       id: user.id,
+    //     },
+    //   });
+
+    //   let accessToken: string | null = null;
+    //   if (getToken) {
+    //     accessToken = getToken.access_token!;
+    //   }
+
+    //   session.user.token = accessToken;
+    //   return session;
+    // },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        token.id = user.id;
+      }
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+  },
   secret: process.env.SECRET,
   debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/login",
+    error: "/login",
   },
 };
