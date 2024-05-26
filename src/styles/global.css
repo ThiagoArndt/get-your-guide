@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,10 +19,10 @@
 body {
   font-family: "Nunito Sans", sans-serif;
   min-height: 100vh;
-  margin: 0;  
+  margin: 0;
   display: flex;
   flex-direction: column;
-  background: #F6F7FB
+  background: #f6f7fb;
 }
 
 main {
@@ -35,3 +35,37 @@ main {
   }
 }
 
+/* Hide the default scrollbar */
+::-webkit-scrollbar,
+scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track,
+scrollbar {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb,
+scrollbar {
+  background: #888; /* Color of the scrollbar handle */
+  border-radius: 4px; /* Border radius of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover,
+scrollbar {
+  background: #555; /* Color of the scrollbar handle on hover */
+}
+
+textarea::-webkit-scrollbar {
+  width: 10px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

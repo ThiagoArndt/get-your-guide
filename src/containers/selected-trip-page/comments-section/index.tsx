@@ -30,8 +30,8 @@ function CommentsSection() {
         />
       </Box>
       <div className="w-full flex flex-col items-end gap-3 mb-10">
-        <TextArea setInput={setComment} input={comment} />
-        <Button className="w-40 " backgroundColor="black" text="Comentar" />
+        <TextArea borderColor="grey" setInput={setComment} input={comment} />
+        <Button onPressed={() => {}} className="w-40 " backgroundColor="black" text="Comentar" />
       </div>
       {commentsData.map((item) => {
         return (

@@ -1,7 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialProvider from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
 
 import { db as prisma } from "@db/client";
 
@@ -37,9 +36,9 @@ export const authOptions: NextAuthOptions = {
         console.log("AGENT", agent);
 
         if (agent != null) {
-          selectedUser = agent;
+          selectedUser = { ...agent, role: "agent" };
         } else if (user != null) {
-          selectedUser = user;
+          selectedUser = { ...user, role: "user" };
         } else {
           throw new Error("Usuário não encontrado");
         }
@@ -48,10 +47,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Usuários não registrado através de credenciais");
         }
 
-        const matchPassword = await bcrypt.compare(
-          credentials.password,
-          selectedUser.password
-        );
+        const matchPassword = await bcrypt.compare(credentials.password, selectedUser.password);
         if (!matchPassword) throw new Error("Senha incorreta");
 
         return selectedUser;
@@ -62,24 +58,19 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    // async session({ session, token, user }) {
-    //   const getToken = await prisma.users.findFirst({
-    //     where: {
-    //       id: user.id,
-    //     },
-    //   });
-
-    //   let accessToken: string | null = null;
-    //   if (getToken) {
-    //     accessToken = getToken.access_token!;
-    //   }
-
-    //   session.user.token = accessToken;
-    //   return session;
-    // },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async session({ session, token, user }) {
+      if (token) {
+        session.user.role = token.role;
+        session.user.name = user.name;
+        session.user.image = user.image;
+      }
+      return session;
+    },
+    async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
+        token.name = user.name;
       }
       if (account) {
         token.accessToken = account.access_token;
