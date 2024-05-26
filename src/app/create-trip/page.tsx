@@ -5,7 +5,7 @@ import React from "react";
 
 function CreateTripPage() {
   return (
-    <div className="px-80">
+    <div className="xl:px-40 px-80">
       <CardWrapper>
         <div className="py-5">
           <div className="flex flex-row gap-5">

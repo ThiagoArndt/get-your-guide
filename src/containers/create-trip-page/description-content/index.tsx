@@ -8,7 +8,7 @@ function DescriptionContent() {
   const [product, setProduct] = useState<string | null>("");
 
   return (
-    <div className="flex flex-col gap-4 grow w-full">
+    <div className="flex flex-col gap-4 flex-grow w-full">
       <h1 className="font-bold text-2xl">Description</h1>
       <Card className="flex flex-col gap-5 h-full w-full">
         <div>
@@ -31,7 +31,12 @@ function DescriptionContent() {
         </div>
         <h1 className="font-bold text-greyApp mb-[-10px]">Product name</h1>
         <div className="flex-grow relative">
-          <TextArea className="h-full" input={product} setInput={setProduct} borderColor="grey" />
+          <TextArea
+            className="h-full"
+            input={product}
+            setInput={setProduct}
+            borderColor="grey"
+          />
         </div>
       </Card>
     </div>
