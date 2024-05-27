@@ -94,8 +94,12 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
                         return (
                           /* eslint-disable react/jsx-key */
                           <div {...getSuggestionItemProps(suggestion, {})}>
-                            <strong>{suggestion.formattedSuggestion.mainText}</strong>{" "}
-                            <small>{suggestion.formattedSuggestion.secondaryText}</small>
+                            <strong>
+                              {suggestion.formattedSuggestion.mainText}
+                            </strong>{" "}
+                            <small>
+                              {suggestion.formattedSuggestion.secondaryText}
+                            </small>
                           </div>
                         );
                         /* eslint-enable react/jsx-key */
@@ -147,7 +151,8 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
               <h1 className="font-bold">Check-out</h1>
               <FeatherIcon icon="chevron-down" className="text-greenApp" />
             </div>
-            {checkOut === undefined || checkOut.getTime() === new Date().getTime()
+            {checkOut === undefined ||
+            checkOut.getTime() === new Date().getTime()
               ? "Escolha as datas"
               : dateFormatter(checkOut)}
           </div>
@@ -235,7 +240,11 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
           </div>
         </Popover.Content>
       </Popover.Root>
-      <Button onClick={handleSearch} backgroundColor="black" text="Pesquisar" />
+      <Button
+        onPressed={handleSearch}
+        backgroundColor="black"
+        text="Pesquisar"
+      />
     </div>
   );
 }

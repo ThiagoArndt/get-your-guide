@@ -1,16 +1,41 @@
+"use client";
+
 import CardWrapper from "@containers/create-trip-page/card-wrapper";
+import DatesContent from "@containers/create-trip-page/dates-content";
 import DescriptionContent from "@containers/create-trip-page/description-content";
 import ProductImagesContent from "@containers/create-trip-page/product-images-content";
+import PricingContent from "@containers/create-trip-page/pricing-content";
 import React from "react";
+import Button from "@components/Button";
 
 function CreateTripPage() {
   return (
-    <div className="xl:px-40 px-80">
+    <div className="px-80">
       <CardWrapper>
-        <div className="py-5">
-          <div className="flex flex-row gap-5">
-            <DescriptionContent />
-            <ProductImagesContent />
+        <div className="flex flex-col justify-between h-full">
+          <div className="py-5">
+            <div className="flex flex-row gap-5 min-w-[500px]">
+              <DescriptionContent />
+              <div className="flex flex-col gap-5 min-w-[500px]">
+                <ProductImagesContent />
+                <DatesContent />
+                <PricingContent />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row gap-5 w-full justify-end">
+            <Button
+              hasBorder
+              backgroundColor="white"
+              onPressed={() => {}}
+              text="Cancelar"
+            />
+            <Button
+              hasBorder
+              backgroundColor="white"
+              onPressed={() => {}}
+              text="Cancelar"
+            />
           </div>
         </div>
       </CardWrapper>

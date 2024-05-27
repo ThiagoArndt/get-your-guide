@@ -8,7 +8,7 @@ function DescriptionContent() {
   const [product, setProduct] = useState<string | null>("");
 
   return (
-    <div className="flex flex-col gap-4 flex-grow w-full">
+    <div className="flex flex-col gap-4 w-full">
       <h1 className="font-bold text-2xl">Description</h1>
       <Card className="flex flex-col gap-5 h-full w-full">
         <div>

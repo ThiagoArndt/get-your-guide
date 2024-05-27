@@ -49,9 +49,9 @@ const ProductImagesContent: React.FC<ProductImagesContentProps> = () => {
   });
 
   return (
-    <div className="flex flex-col gap-4 flex-grow w-full">
+    <div className="flex flex-col gap-4 w-full">
       <h1 className="font-bold text-2xl">Description</h1>
-      <Card className="flex flex-col gap-5 w-[500px]">
+      <Card className="flex flex-col gap-5">
         <div className="flex flex-col overflow-x-auto">
           <div className="flex flex-row gap-2">
             <div
