@@ -13,7 +13,6 @@ export default function Header() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [imageData, setImageData] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -27,18 +26,12 @@ export default function Header() {
           setImageData(`data:${mimeType};base64,${base64Image}`);
         } catch (error) {
           console.error("Error fetching image:", error);
-        } finally {
-          setIsLoading(false);
         }
-      } else {
-        setIsLoading(false);
       }
     };
 
     if (status === "authenticated") {
       fetchImage();
-    } else {
-      setIsLoading(false);
     }
   }, [session, status]);
 
@@ -110,7 +103,7 @@ export default function Header() {
         {/* Social media icons */}
 
         <div className="flex grow items-center justify-end gap-4">
-          {isLoading ? (
+          {status === "loading" ? (
             <div className="flex flex-row gap-5">
               <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
               <Button
