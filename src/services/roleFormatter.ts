@@ -1,4 +1,6 @@
-const getRoleToString = (role: RolesEnum) => {
+import { RolesEnum } from "@entities/interfaces";
+
+export const getRoleToString = (role: RolesEnum) => {
   if (role === RolesEnum.AGENT) {
     return "Agente";
   } else if (role === RolesEnum.USER) {
@@ -6,7 +8,7 @@ const getRoleToString = (role: RolesEnum) => {
   }
 };
 
-const getStringToRole = (input: "Usuário" | "Agente") => {
+export const getStringToRole = (input: "Usuário" | "Agente") => {
   if (input.toLocaleLowerCase() === "usuário") {
     return RolesEnum.USER;
   } else if (input.toLocaleLowerCase() === "agente") {

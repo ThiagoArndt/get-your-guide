@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,20 +17,20 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src", 
+    "baseUrl": "src",
     "paths": {
-
       "@app/*": ["app/*"],
       "@api/*": ["app/api/*"],
       "@components/*": ["components/*"],
-      "@containers/*": ["containers/*"],    
-      "@db/*": ["db/*"],   
-      "@hooks/*": ["hooks/*"],   
+      "@containers/*": ["containers/*"],
+      "@db/*": ["db/*"],
+      "@entities/*": ["entities/*"],
+      "@hooks/*": ["hooks/*"],
       "@libs/*": ["libs/*"],
-      "@services/*": ["services/*"],    
-      "@store/*": ["store/*"], 
-      "@styles/*": ["styles/*"], 
-      "@types/*": ["types/*"], 
+      "@services/*": ["services/*"],
+      "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"],
+      "@types/*": ["types/*"]
     }
   },
   "include": [
@@ -44,7 +40,5 @@
     ".next/types/**/*.ts",
     "build-output/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { RolesEnum } from "@entities/interfaces";
 
 function RegisterPage() {
   const router = useRouter();

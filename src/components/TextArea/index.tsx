@@ -5,8 +5,8 @@ interface TextAreaProps
     React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     HTMLTextAreaElement
   > {
-  setInput: React.Dispatch<React.SetStateAction<string | null>>;
-  input: string | null;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
+  input: string;
   borderColor: "black" | "grey";
 }
 
@@ -22,7 +22,9 @@ function TextArea(props: Readonly<TextAreaProps>) {
     <textarea
       {...props}
       ref={textAreaRef}
-      className={`${props.className} bg-transparent w-full border-2 rounded-xl border-solid ${
+      className={`${
+        props.className
+      } bg-transparent w-full border-2 rounded-xl border-solid ${
         borderColor === "black" ? "border-black" : "border-greySecondApp"
       } text-lg outline-none px-2 py-2`}
       value={input || ""}

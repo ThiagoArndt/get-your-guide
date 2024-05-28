@@ -5,7 +5,9 @@ import { User, Lock, Mail, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Dropdown from "@components/Dropdown";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
+import { getStringToRole } from "@services/roleFormatter";
+import { RolesEnum } from "entities/interfaces";
 
 interface RegisterFormContentProps {
   handleRegister: (
@@ -27,10 +29,10 @@ interface IFormValues {
 function RegisterFormContent(props: RegisterFormContentProps) {
   const { handleRegister } = props;
 
-  const [email, setEmail] = useState<string | null>("");
-  const [password, setPassword] = useState<string | null>("");
-  const [confirmPassword, setConfirmPassword] = useState<string | null>("");
-  const [username, setUsername] = useState<string | null>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [userRole, setUserRole] = useState<"Agente" | "Usuário" | null>(null);
 
   const {
@@ -40,6 +42,7 @@ function RegisterFormContent(props: RegisterFormContentProps) {
   } = useForm<IFormValues>();
 
   const onSubmit: SubmitHandler<IFormValues> = async (data) => {
+    setTimeout(() => {}, 2000);
     if (!["Usuário", "Agente"].includes(userRole!)) {
       toast.error("Tipo de usuário inválido");
       return;
@@ -47,30 +50,34 @@ function RegisterFormContent(props: RegisterFormContentProps) {
 
     if (confirmPassword !== password) {
       toast.error("Confirmação de senha deve ser igual a senha");
-    }
-
-    if (Object.keys(errors).length > 0) {
-      if (errors.Email) {
-        toast.error("Email é obrigatório e precisa ser válido");
-      } else if (errors["Nome de usuário"]) {
-        toast.error(
-          "Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres"
-        );
-      } else if (errors.Senha) {
-        toast.error("Senha é obrigatória");
-      } else if (errors["Confirme sua senha"]?.type === "required") {
-        toast.error("Confirmação de senha é obrigatória");
-      } else if (errors["Confirme sua senha"]?.type === "minLength") {
-        toast.error("Confirmação de senha deve ter no mínimo 6 caracteres");
-      }
       return;
     }
+
     await handleRegister(
-      email!,
-      username!,
+      data.Email,
+      data["Nome de usuário"],
       getStringToRole(userRole!)!,
-      password!
+      data.Senha
     );
+  };
+
+  const onError = (errors: FieldErrors<IFormValues>) => {
+    console.log(errors);
+    if (errors["Nome de usuário"]) {
+      toast.error(
+        "Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres"
+      );
+    } else if (errors.Email) {
+      toast.error("Email é obrigatório e precisa ser válido");
+    } else if (errors["Tipo de usuário"]) {
+      toast.error("Tipo de Usuário é obrigatório");
+    } else if (errors.Senha) {
+      toast.error("Senha é obrigatória");
+    } else if (errors["Confirme sua senha"]?.type === "required") {
+      toast.error("Confirmação de senha é obrigatória");
+    } else if (errors["Confirme sua senha"]?.type === "minLength") {
+      toast.error("Confirmação de senha deve ter no mínimo 6 caracteres");
+    }
   };
 
   return (
@@ -85,9 +92,7 @@ function RegisterFormContent(props: RegisterFormContentProps) {
         <div className="flex flex-col gap-6">
           <InputField
             {...register("Nome de usuário", {
-              required: true,
-              maxLength: 20,
-              minLength: 6,
+              required: "Nome de usuário é obrigatório",
             })}
             setInput={setUsername}
             input={username}
@@ -97,7 +102,7 @@ function RegisterFormContent(props: RegisterFormContentProps) {
             borderColor="black"
           />
           <Dropdown
-            {...register("Tipo de usuário")}
+            {...register("Tipo de usuário", {})}
             input={userRole}
             setInput={setUserRole}
             icon={<ChevronRight />}
@@ -106,7 +111,13 @@ function RegisterFormContent(props: RegisterFormContentProps) {
           />
           <div className="bg-blackApp w-full h-[1px]"></div>
           <InputField
-            {...register("Email")}
+            {...register("Email", {
+              required: "Email é obrigatório",
+              pattern: {
+                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                message: "Email inválido",
+              },
+            })}
             setInput={setEmail}
             input={email}
             title="Email"
@@ -115,31 +126,47 @@ function RegisterFormContent(props: RegisterFormContentProps) {
             borderColor="black"
           />
           <InputField
-            {...register("Senha")}
+            {...register("Senha", {
+              required: "Senha é obrigatória",
+              minLength: {
+                value: 6,
+                message: "Senha deve ter no mínimo 6 caracteres",
+              },
+            })}
             setInput={setPassword}
             input={password}
             title="Senha"
             placeHolder="********"
             icon={<Lock />}
             borderColor="black"
+            type="password"
           />
           <InputField
-            {...register("Confirme sua senha")}
+            {...register("Confirme sua senha", {
+              required: "Confirmação de senha é obrigatória",
+              minLength: {
+                value: 6,
+                message: "Confirmação de senha deve ter no mínimo 6 caracteres",
+              },
+            })}
             setInput={setConfirmPassword}
             input={confirmPassword}
             title="Confirme sua senha"
             placeHolder="********"
             icon={<Lock />}
             borderColor="black"
+            type="password"
           />
         </div>
-
-        <Button
-          onPressed={handleSubmit(onSubmit)}
-          className="py-3 w-full"
-          backgroundColor="black"
-          text="Registre-se"
-        />
+        <div>
+          <Button
+            onPressed={handleSubmit(onSubmit, onError)}
+            type="submit"
+            className="py-3 w-full"
+            backgroundColor="black"
+            text="Registre-se"
+          />
+        </div>
       </div>
     </div>
   );

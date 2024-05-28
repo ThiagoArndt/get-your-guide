@@ -1,15 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { db as prisma } from "@db/client";
 import bcrypt from "bcrypt";
+import { SignUpInterface, RolesEnum } from "@entities/interfaces";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
-  }
-
   const { email, password, role, username } = req.body as SignUpInterface;
 
   var userExist = prisma.users.findFirst({ where: { email: email } });

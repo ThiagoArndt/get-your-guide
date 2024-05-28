@@ -5,7 +5,7 @@ import TextArea from "@components/TextArea";
 import React, { useState } from "react";
 
 function DescriptionContent() {
-  const [product, setProduct] = useState<string | null>("");
+  const [product, setProduct] = useState<string>("");
 
   return (
     <div className="flex flex-col gap-4 w-full">

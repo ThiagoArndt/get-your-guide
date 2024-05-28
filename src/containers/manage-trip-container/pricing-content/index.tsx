@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { DollarSign } from "lucide-react";
 
 function PricingContent() {
-  const [input, setInput] = useState<string | null>("");
+  const [input, setInput] = useState<string>("");
 
   return (
     <div className="flex flex-col gap-4 flex-grow w-full">

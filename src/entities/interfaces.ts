@@ -1,16 +1,16 @@
-interface SignUpInterface {
+export interface SignUpInterface {
   username: string;
   email: string;
   password: string;
   role: RolesEnum;
 }
 
-enum RolesEnum {
+export enum RolesEnum {
   USER,
   AGENT,
 }
 
-interface TripInterface {
+export interface TripInterface {
   created_by: string;
   location: string;
   date_final: Date;
