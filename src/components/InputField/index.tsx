@@ -1,7 +1,11 @@
 "use client";
 import React, { ReactElement } from "react";
 
-interface InputFieldProps {
+interface InputFieldProps
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   icon?: ReactElement<any, any>;
   placeHolder?: string;
   title?: string;
@@ -27,6 +31,7 @@ function InputField(props: Readonly<InputFieldProps>) {
       >
         {icon ?? null}
         <input
+          {...props}
           type="text"
           value={input || ""}
           onChange={handleInputChange}

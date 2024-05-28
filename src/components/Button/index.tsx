@@ -8,17 +8,17 @@ interface ButtonProps
   > {
   text: string;
   backgroundColor: "white" | "black";
-  onPressed: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onPressed: () => Promise<void> | void;
   hasBorder?: boolean;
 }
 
 function Button(props: Readonly<ButtonProps>) {
   const { text, backgroundColor, className, onPressed, hasBorder } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isLoading == false) {
       setIsLoading(true);
-      onPressed;
+      await onPressed();
       setIsLoading(false);
     }
   };
@@ -35,7 +35,7 @@ function Button(props: Readonly<ButtonProps>) {
     : `${backgroundClass} ${borderClass} ${baseClass}`;
 
   return (
-    <button onClick={onPressed} {...props} className={combinedClassName}>
+    <button onClick={handleClick} {...props} className={combinedClassName}>
       {isLoading ? "Carregando..." : text}
     </button>
   );

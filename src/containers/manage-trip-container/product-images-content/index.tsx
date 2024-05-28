@@ -1,14 +1,14 @@
 "use client";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Image as ImageIcon } from "lucide-react";
+import { Image as ImageIcon, X } from "lucide-react";
 import Card from "@components/Card";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
 interface ProductImagesContentProps {}
 
-const ProductImagesContent: React.FC<ProductImagesContentProps> = () => {
+function ProductImagesContent(props: ProductImagesContentProps) {
   const [productImages, setProductImages] = useState<string[]>([]);
 
   const onDrop = useCallback(
@@ -40,6 +40,10 @@ const ProductImagesContent: React.FC<ProductImagesContentProps> = () => {
     [productImages]
   );
 
+  const handleImageRemove = (index: number) => {
+    setProductImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
@@ -67,12 +71,18 @@ const ProductImagesContent: React.FC<ProductImagesContentProps> = () => {
                 className="relative w-[100px] h-[100px] flex-shrink-0"
               >
                 <div className="relative w-full h-full object-cover rounded-[13px]">
+                  <X className="z-10" />
+                  <h1 className="text-blue-500">aaaa</h1>
                   <Image
                     src={src}
                     alt=""
                     layout="fill"
                     objectFit="cover"
-                    className="w-full h-full object-cover rounded-[13px]"
+                    className="w-full z-0 h-full object-cover rounded-[13px]"
+                  />
+                  <X
+                    onClick={() => handleImageRemove(index)}
+                    className="absolute top-1 right-1 z-10 text-white cursor-pointer"
                   />
                 </div>
               </div>
@@ -83,6 +93,6 @@ const ProductImagesContent: React.FC<ProductImagesContentProps> = () => {
       </Card>
     </div>
   );
-};
+}
 
 export default ProductImagesContent;

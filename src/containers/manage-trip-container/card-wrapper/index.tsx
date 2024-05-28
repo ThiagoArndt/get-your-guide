@@ -8,7 +8,7 @@ interface CardWrapperProps {
 function CardWrapper(props: Readonly<CardWrapperProps>) {
   const { children } = props;
   return (
-    <div className="flex flex-col bg-white w-full rounded-[30px] px-10 py-5 h-[900px]">
+    <div className="flex flex-col bg-white w-full rounded-[30px] px-10 py-5 h-auto">
       <div className="flex flex-row gap-3">
         <div className="border-2 flex items-center w-12 aspect-square justify-center rounded-xl">
           <ChevronLeft />

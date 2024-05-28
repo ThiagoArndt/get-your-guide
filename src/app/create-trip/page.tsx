@@ -1,10 +1,10 @@
 "use client";
 
-import CardWrapper from "@containers/create-trip-page/card-wrapper";
-import DatesContent from "@containers/create-trip-page/dates-content";
-import DescriptionContent from "@containers/create-trip-page/description-content";
-import ProductImagesContent from "@containers/create-trip-page/product-images-content";
-import PricingContent from "@containers/create-trip-page/pricing-content";
+import CardWrapper from "@containers/manage-trip-container/card-wrapper";
+import DatesContent from "@containers/manage-trip-container/dates-content";
+import DescriptionContent from "@containers/manage-trip-container/description-content";
+import ProductImagesContent from "@containers/manage-trip-container/product-images-content";
+import PricingContent from "@containers/manage-trip-container/pricing-content";
 import React from "react";
 import Button from "@components/Button";
 
@@ -23,7 +23,7 @@ function CreateTripPage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row gap-5 w-full justify-end">
+          <div className="flex flex-row gap-5 w-full justify-end mt-10">
             <Button
               hasBorder
               backgroundColor="white"

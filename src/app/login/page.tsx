@@ -1,5 +1,5 @@
-import FormContent from "@containers/login-page/form-content";
-import ImageContent from "@containers/login-page/image-content";
+import FormContent from "@containers/auth-container/login-form-content";
+import ImageContent from "@containers/auth-container/image-content";
 
 function LoginPage() {
   return (

@@ -1,9 +1,9 @@
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { notFound } from "next/navigation";
 import dummyData from "@libs/utils/dummy_data.json";
-import ImagesSection from "@containers/selected-trip-page/images-section";
-import ContentSection from "@containers/selected-trip-page/content-section";
-import CommentsSection from "@containers/selected-trip-page/comments-section";
+import ImagesSection from "@containers/selected-trip-container/images-section";
+import ContentSection from "@containers/selected-trip-container/content-section";
+import CommentsSection from "@containers/selected-trip-container/comments-section";
 
 async function TripId({ params }: Readonly<{ params: Params }>) {
   const data: Trip | undefined = await getData({ params });

@@ -5,7 +5,7 @@ interface DropdownProps {
   icon?: ReactElement<any, any>;
   options: string[];
   title?: string;
-  setInput: React.Dispatch<React.SetStateAction<string | null>>;
+  setInput: React.Dispatch<React.SetStateAction<any | null>>;
   input: string | null;
 }
 
@@ -13,7 +13,7 @@ function Dropdown(props: DropdownProps) {
   const { setInput, input, icon, options, title } = props;
 
   const handleSelectOption = (option: string) => {
-    setInput(option);
+    if (option) setInput(option);
   };
 
   return (
