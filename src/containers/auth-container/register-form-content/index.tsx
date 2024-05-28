@@ -1,20 +1,23 @@
 "use client";
 import Button from "@components/Button";
 import InputField from "@components/InputField";
-import { User, Lock, Mail, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import { User, Lock, Mail, ChevronRight, ImageIcon } from "lucide-react";
+import React, { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import Dropdown from "@components/Dropdown";
 import { useForm, SubmitHandler, FieldErrors } from "react-hook-form";
 import { getStringToRole } from "@services/roleFormatter";
 import { RolesEnum } from "entities/interfaces";
+import { useDropzone } from "react-dropzone";
+import Image from "next/image";
 
 interface RegisterFormContentProps {
   handleRegister: (
     email: string,
     username: string,
     role: RolesEnum,
-    password: string
+    password: string,
+    profile_image: string
   ) => Promise<void>;
 }
 
@@ -26,7 +29,7 @@ interface IFormValues {
   "Confirme sua senha": string;
 }
 
-function RegisterFormContent(props: RegisterFormContentProps) {
+function RegisterFormContent(props: Readonly<RegisterFormContentProps>) {
   const { handleRegister } = props;
 
   const [email, setEmail] = useState<string>("");
@@ -34,6 +37,7 @@ function RegisterFormContent(props: RegisterFormContentProps) {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userRole, setUserRole] = useState<"Agente" | "Usuário" | null>(null);
+  const [profileImage, setProfileImage] = useState<string>("");
 
   const {
     register,
@@ -42,7 +46,11 @@ function RegisterFormContent(props: RegisterFormContentProps) {
   } = useForm<IFormValues>();
 
   const onSubmit: SubmitHandler<IFormValues> = async (data) => {
-    setTimeout(() => {}, 2000);
+    if (profileImage == "") {
+      toast.error("Imagem não pode ser vazia");
+      return;
+    }
+
     if (!["Usuário", "Agente"].includes(userRole!)) {
       toast.error("Tipo de usuário inválido");
       return;
@@ -57,16 +65,15 @@ function RegisterFormContent(props: RegisterFormContentProps) {
       data.Email,
       data["Nome de usuário"],
       getStringToRole(userRole!)!,
-      data.Senha
+      data.Senha,
+      profileImage
     );
   };
 
   const onError = (errors: FieldErrors<IFormValues>) => {
     console.log(errors);
     if (errors["Nome de usuário"]) {
-      toast.error(
-        "Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres"
-      );
+      toast.error("Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres");
     } else if (errors.Email) {
       toast.error("Email é obrigatório e precisa ser válido");
     } else if (errors["Tipo de usuário"]) {
@@ -80,16 +87,60 @@ function RegisterFormContent(props: RegisterFormContentProps) {
     }
   };
 
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
+
+    const file = acceptedFiles[0]; // Only handle the first file
+
+    const reader = new FileReader();
+
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      if (e.target && typeof e.target.result === "string") {
+        setProfileImage(e.target.result);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+    },
+    maxFiles: 1, // Only allow one file
+  });
+
   return (
     <div className="w-full flex flex-col gap-7 pr-52">
       <div>
         <h1 className="font-bold text-4xl">Registre-se</h1>
-        <h2 className="font-extralight text-greyApp text-2xl">
-          Venha viver aventuras incríveis!
-        </h2>
+        <h2 className="font-extralight text-greyApp text-2xl">Venha viver aventuras incríveis!</h2>
       </div>
       <div className="px-6 w-full flex flex-col gap-6">
         <div className="flex flex-col gap-6">
+          <div {...getRootProps()} className="flex justify-center items-center w-full">
+            {profileImage !== "" ? (
+              <div className="flex gap-2 mt-2">
+                <div className="cursor-pointer relative rounded-[13px] aspect-square w-[100px]">
+                  <input {...getInputProps()} />
+                  <Image
+                    src={profileImage}
+                    alt="Profile"
+                    className="rounded-[13px]"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className=" justify-center flex-shrink-0 flex items-center cursor-pointer border-2 border-dashed border-blackApp rounded-[13px] aspect-square w-[100px]">
+                <input {...getInputProps()} />
+                <ImageIcon size={25} />
+              </div>
+            )}
+          </div>
+
           <InputField
             {...register("Nome de usuário", {
               required: "Nome de usuário é obrigatório",

@@ -33,6 +33,7 @@
     "framer-motion": "^11.1.7",
     "jsdom": "^24.0.0",
     "lucide-react": "^0.378.0",
+    "mime-types": "^2.1.35",
     "mongodb": "^6.6.2",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
@@ -60,6 +61,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/feather-icons": "^4.29.4",
+    "@types/mime-types": "^2.1.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

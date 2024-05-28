@@ -14,16 +14,18 @@ function RegisterPage() {
     email: string,
     username: string,
     role: RolesEnum,
-    password: string
+    password: string,
+    profile_image: string
   ) => {
     try {
-      const res = await axios.post("/api/auth/register", {
+      const res = await axios.post("/api/register", {
         email: email,
         username: username,
         role: role,
         password: password,
+        profile_image: profile_image,
       });
-      toast.success(res.data.message);
+      toast.success(res.statusText);
       router.push("/login");
     } catch (e) {
       if (axios.isAxiosError(e)) {

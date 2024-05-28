@@ -5,19 +5,22 @@ declare module "next-auth" {
    * Returned by `useSession`, `getSession`, and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
-      /** The user's role. */
-      role?: string;
-    } & DefaultSession["user"];
+    user: User;
   }
 
-  interface User extends DefaultUser {
+  interface User {
+    username?: string;
+    profile_image?: Buffer;
     role?: string;
+    profile_image_path: string;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
+    profile_image_path: string;
+    username?: string;
+    profile_image?: Buffer;
     role?: string;
   }
 }

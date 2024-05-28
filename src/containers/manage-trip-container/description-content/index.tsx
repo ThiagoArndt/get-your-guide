@@ -29,14 +29,19 @@ function DescriptionContent() {
             placeHolder="Apple Juice"
           />
         </div>
-        <h1 className="font-bold text-greyApp mb-[-10px]">Product name</h1>
-        <div className="flex-grow relative">
-          <TextArea
-            className="h-full"
+        <div>
+          <h1 className="font-bold text-greyApp">Product name</h1>
+          <InputField
             input={product}
             setInput={setProduct}
             borderColor="grey"
+            placeHolder="Apple Juice"
+            type="number"
           />
+        </div>
+        <h1 className="font-bold text-greyApp mb-[-10px]">Product name</h1>
+        <div className="flex-grow relative">
+          <TextArea className="h-full" input={product} setInput={setProduct} borderColor="grey" />
         </div>
       </Card>
     </div>

@@ -8,7 +8,7 @@ interface ButtonProps
   > {
   text: string;
   backgroundColor: "white" | "black";
-  onPressed: () => Promise<void> | void;
+  onPressed: (() => Promise<void>) | (() => void);
   hasBorder?: boolean;
 }
 

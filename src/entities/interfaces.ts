@@ -3,6 +3,7 @@ export interface SignUpInterface {
   email: string;
   password: string;
   role: RolesEnum;
+  profile_image: string;
 }
 
 export enum RolesEnum {

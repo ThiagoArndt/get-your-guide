@@ -18,6 +18,7 @@ model agents {
   created_trips String[]
   email         String
   password      String
+  profile_image Bytes
   username      String
 }
 
@@ -35,9 +36,10 @@ model trips {
 }
 
 model users {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  email       String
-  liked_items String[]
-  password    String
-  username    String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  email         String
+  liked_items   String[]
+  password      String
+  profile_image Bytes
+  username      String
 }
