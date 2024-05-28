@@ -10,7 +10,7 @@ export default function Header() {
       {/* Header container */}
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Website title */}
-        <h1 className="text-xl font-semibold">Jordan Thirkle</h1>
+        <h1 className="text-xl font-semibold">Pinto</h1>
         {/* Navigation menu */}
         <nav className="hidden md:block">
           <ul className="flex gap-x-6">
@@ -57,11 +57,19 @@ function SocialIcons() {
   return (
     <div className="flex gap-x-4">
       {/* Twitter icon */}
-      <a href="https://twitter.com/Jordan_Thirkle" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://twitter.com/Jordan_Thirkle"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <p>teste</p>
       </a>
       {/* GitHub icon */}
-      <a href="https://github.com/jordan-thirkle" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://github.com/jordan-thirkle"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <p>teste</p>
       </a>
       {/* Add more social media icons as needed */}
