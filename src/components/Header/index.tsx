@@ -65,27 +65,42 @@ export default function Header() {
             <ul className="flex gap-x-3">
               {/* Navigation links */}
               <li>
-                <Link href="/" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                <Link
+                  href="/"
+                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                <Link
+                  href="/about"
+                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                >
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/portfolio" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                <Link
+                  href="/portfolio"
+                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                >
                   Portfolio
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                <Link
+                  href="/blog"
+                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="rounded-full py-2 px-4 hover:bg-lightGreyApp">
+                <Link
+                  href="/contact"
+                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                >
                   Contact
                 </Link>
               </li>
@@ -96,7 +111,14 @@ export default function Header() {
 
         <div className="flex grow items-center justify-end gap-4">
           {isLoading ? (
-            <h1>Loading...</h1>
+            <div className="flex flex-row gap-5">
+              <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
+              <Button
+                onPressed={() => signOut()}
+                backgroundColor="black"
+                text="Sign Out"
+              />
+            </div>
           ) : session ? (
             <div className="flex flex-row gap-5">
               <div className="relative aspect-square w-[50px]">
@@ -110,11 +132,15 @@ export default function Header() {
                   />
                 ) : (
                   <div className="rounded-full bg-gray-300 w-full h-full flex items-center justify-center">
-                    <span>Loading...</span>
+                    <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
                   </div>
                 )}
               </div>
-              <Button onPressed={() => signOut()} backgroundColor="black" text="Sign Out" />
+              <Button
+                onPressed={() => signOut()}
+                backgroundColor="black"
+                text="Sign Out"
+              />
             </div>
           ) : (
             <>
