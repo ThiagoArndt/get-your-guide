@@ -16,9 +16,6 @@ function CreateTripPage() {
     return <p>Loading...</p>;
   }
 
-  if (status === "unauthenticated") {
-    return <p>Access Denied</p>;
-  }
   return (
     <div className="px-80">
       <CardWrapper>

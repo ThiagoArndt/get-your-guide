@@ -7,13 +7,17 @@ export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const token = await getToken({ req, secret: process.env.SECRET });
-  console.log(token);
+
   if (token) {
     if (pathname === "/login" || pathname === "/register") {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
     if (pathname === "/create-trip" && token.role !== "agent") {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  } else {
+    if (pathname === "/create-trip") {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
