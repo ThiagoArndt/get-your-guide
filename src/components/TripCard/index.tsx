@@ -6,15 +6,23 @@ import { Heart } from "lucide-react";
 interface TripCardProps {
   image: string;
   destination: string;
-  distance: number;
-  checkInDate: string;
-  checkOutDate: string;
-  price: number;
-  maxPeople: number;
+  distance?: number;
+  checkInDate?: string;
+  checkOutDate?: string;
+  price?: number;
+  maxPeople?: number;
 }
 
 function TripCard(props: Readonly<TripCardProps>) {
-  const { checkInDate, checkOutDate, destination, distance, image, maxPeople, price } = props;
+  const {
+    checkInDate,
+    checkOutDate,
+    destination,
+    distance,
+    image,
+    maxPeople,
+    price,
+  } = props;
 
   return (
     <div className="p-4 w-full  flex flex-col gap-2 rounded-3xl py-10 px-5 cursor-pointer hover:bg-blackApp hover:bg-opacity-5">
@@ -26,22 +34,45 @@ function TripCard(props: Readonly<TripCardProps>) {
           }}
           className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
         />
-        <Image layout="fill" objectFit="cover" className="rounded-3xl" src={image} alt="" />
+        <Image
+          layout="fill"
+          objectFit="cover"
+          className="rounded-3xl"
+          src={image}
+          alt=""
+        />
       </div>
 
       <div className="flex flex-row justify-between">
         <p className="font-extrabold text-2xl">{destination}</p>
-        <p className="font-bold text-greenApp text-2xl">Destaque</p>
       </div>
       <div className="flex items-start flex-col">
-        <p className="text-greyApp font-light text-lg">{distance}km de distância</p>
-        <p className="text-greyApp font-light text-lg">
-          {getInfoDateFormatter(new Date(checkInDate), new Date(checkOutDate))}
-        </p>
-        <p className="text-greyApp font-light text-lg">{maxPeople.toString()} Pessoas</p>
-        <p className="text-black text-lg">
-          <span className="font-extrabold text-2xl">R${price.toString()}</span> noite
-        </p>
+        {distance != null ? (
+          <p className="text-greyApp font-light text-lg">
+            {distance}km de distância
+          </p>
+        ) : null}
+        {checkInDate != null && checkOutDate != null ? (
+          <p className="text-greyApp font-light text-lg">
+            {getInfoDateFormatter(
+              new Date(checkInDate),
+              new Date(checkOutDate)
+            )}
+          </p>
+        ) : null}
+        {maxPeople != null ? (
+          <p className="text-greyApp font-light text-lg">
+            {maxPeople.toString()} Pessoas
+          </p>
+        ) : null}
+        {price != null ? (
+          <p className="text-black text-lg">
+            <span className="font-extrabold text-2xl">
+              R${price.toString()}
+            </span>{" "}
+            noite
+          </p>
+        ) : null}
       </div>
     </div>
   );

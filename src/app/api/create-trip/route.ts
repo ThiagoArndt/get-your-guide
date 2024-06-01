@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { db as prisma } from "@db/client";
+import { TripInterface } from "@entities/interfaces";
+import { validateUser } from "@services/sessionHelper";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,6 +23,7 @@ export default async function handler(
   } = req.body as TripInterface;
 
   try {
+    await validateUser(created_by);
     const tripData = await prisma.trips.createMany({
       data: {
         created_by: created_by,

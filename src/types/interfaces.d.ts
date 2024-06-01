@@ -8,3 +8,17 @@ interface Trip {
   price?: number;
   maxPeople?: number;
 }
+
+interface ProfileInterface {
+  id?: string;
+  username: string;
+  profile_image: Buffer;
+  trips: ProfileTripInterface[];
+}
+
+interface ProfileTripInterface {
+  id: string;
+  image: Buffer;
+  destination: string;
+  isLiked?: boolean;
+}

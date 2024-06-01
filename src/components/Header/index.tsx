@@ -16,14 +16,11 @@ export default function Header() {
 
   useEffect(() => {
     const fetchImage = async () => {
-      if (session && session.user.profile_image_path) {
+      if (session) {
         try {
-          const response = await axios.post("/api/get-image", {
-            pathFile: session.user.profile_image_path,
-          });
-          const mimeType = response.data.mimeType;
-          const base64Image = response.data.base64Image;
-          setImageData(`data:${mimeType};base64,${base64Image}`);
+          const response = await axios.get("/api/get-image");
+
+          setImageData(response.data);
         } catch (error) {
           console.error("Error fetching image:", error);
         }
@@ -34,7 +31,7 @@ export default function Header() {
       fetchImage();
     }
   }, [session, status]);
-
+  console.log(imageData?.substring(0, 200));
   return (
     <header className="text-black top-0 mb-10">
       <div className="py-4 px-28 flex justify-between">

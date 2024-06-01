@@ -31,6 +31,7 @@
     "feather-icons": "^4.29.2",
     "feather-icons-react": "^0.7.0",
     "framer-motion": "^11.1.7",
+    "fs": "^0.0.1-security",
     "jsdom": "^24.0.0",
     "lucide-react": "^0.378.0",
     "mime-types": "^2.1.35",

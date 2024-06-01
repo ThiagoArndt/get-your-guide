@@ -1,21 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { db as prisma } from "@db/client";
+import { NextResponse } from "next/server";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
-  }
-
+export default async function GET(req: Request) {
   try {
     const tripsData = await prisma.trips.findMany();
-    return res
-      .status(200)
-      .json({ message: "Viagens resgatadas com sucesso!", data: tripsData });
+    return NextResponse.json(
+      { data: tripsData },
+      { status: 200, statusText: "Viagens resgatadas com sucesso!" }
+    );
   } catch (error) {
     console.error("Erro ao resgatar viagens", error);
-    return res.status(401).json({ error: "Erro ao resgatar viagens" });
+    return NextResponse.json(
+      { error: "Erro ao resgatar viagens" },
+      { status: 401 }
+    );
   }
 }

@@ -73,7 +73,9 @@ function RegisterFormContent(props: Readonly<RegisterFormContentProps>) {
   const onError = (errors: FieldErrors<IFormValues>) => {
     console.log(errors);
     if (errors["Nome de usuário"]) {
-      toast.error("Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres");
+      toast.error(
+        "Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres"
+      );
     } else if (errors.Email) {
       toast.error("Email é obrigatório e precisa ser válido");
     } else if (errors["Tipo de usuário"]) {
@@ -106,7 +108,7 @@ function RegisterFormContent(props: Readonly<RegisterFormContentProps>) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+      "image/*": [".jpeg", ".jpg"],
     },
     maxFiles: 1, // Only allow one file
   });
@@ -115,11 +117,16 @@ function RegisterFormContent(props: Readonly<RegisterFormContentProps>) {
     <div className="w-full flex flex-col gap-7 pr-52">
       <div>
         <h1 className="font-bold text-4xl">Registre-se</h1>
-        <h2 className="font-extralight text-greyApp text-2xl">Venha viver aventuras incríveis!</h2>
+        <h2 className="font-extralight text-greyApp text-2xl">
+          Venha viver aventuras incríveis!
+        </h2>
       </div>
       <div className="px-6 w-full flex flex-col gap-6">
         <div className="flex flex-col gap-6">
-          <div {...getRootProps()} className="flex justify-center items-center w-full">
+          <div
+            {...getRootProps()}
+            className="flex justify-center items-center w-full"
+          >
             {profileImage !== "" ? (
               <div className="flex gap-2 mt-2">
                 <div className="cursor-pointer relative rounded-[13px] aspect-square w-[100px]">

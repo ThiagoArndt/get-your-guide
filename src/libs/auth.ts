@@ -5,7 +5,7 @@ import CredentialProvider from "next-auth/providers/credentials";
 import { db as prisma } from "@db/client";
 
 import bcrypt from "bcrypt";
-import { saveBase64Image } from "@services/imageHelper";
+import { RolesEnum } from "@entities/interfaces";
 
 // Directory to store profile images
 
@@ -30,18 +30,14 @@ export const authOptions: NextAuthOptions = {
           where: { email: credentials.email },
         });
 
-        console.log("USER", user);
-
         const agent = await prisma.agents.findFirst({
           where: { email: credentials.email },
         });
 
-        console.log("AGENT", agent);
-
         if (agent != null) {
-          selectedUser = { ...agent, role: "agent" };
+          selectedUser = { ...agent, role: RolesEnum.AGENT };
         } else if (user != null) {
-          selectedUser = { ...user, role: "user" };
+          selectedUser = { ...user, role: RolesEnum.USER };
         } else {
           throw new Error("Usuário não encontrado");
         }
@@ -50,13 +46,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Usuários não registrado através de credenciais");
         }
 
-        const matchPassword = await bcrypt.compare(credentials.password, selectedUser.password);
+        const matchPassword = await bcrypt.compare(
+          credentials.password,
+          selectedUser.password
+        );
         if (!matchPassword) throw new Error("Senha incorreta");
 
-        // Store profile image locally
-        const base64Image = selectedUser.profile_image.toString("base64");
-        const profileImagePath = saveBase64Image(base64Image, selectedUser.id);
-        selectedUser = { ...selectedUser, profile_image_path: profileImagePath };
         return selectedUser;
       },
     }),
@@ -71,7 +66,6 @@ export const authOptions: NextAuthOptions = {
         // Retrieve profile image path
         session.user.role = token.role;
         session.user.email = token.email;
-        session.user.profile_image_path = token.profile_image_path;
       }
       return session;
     },
@@ -80,7 +74,6 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
-        token.profile_image_path = user.profile_image_path;
       }
       if (account) {
         token.accessToken = account.access_token;

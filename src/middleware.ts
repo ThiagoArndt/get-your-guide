@@ -1,6 +1,8 @@
 import { withAuth } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { signOut } from "next-auth/react";
+import { RolesEnum } from "@entities/interfaces";
 
 // Middleware function
 export default async function middleware(req: NextRequest) {
@@ -13,10 +15,11 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    if (pathname === "/create-trip" && token.role !== "agent") {
+    if (pathname === "/create-trip" && token.role !== RolesEnum.AGENT) {
       return NextResponse.redirect(new URL("/", req.url));
     }
   } else {
+    signOut();
     if (pathname === "/create-trip") {
       return NextResponse.redirect(new URL("/", req.url));
     }
