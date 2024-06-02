@@ -5,51 +5,53 @@ import { Image as ImageIcon, X } from "lucide-react";
 import Card from "@components/Card";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import { UseFormRegister } from "react-hook-form";
+import { CreateTripFormValues } from "@app/create-trip/page";
 
-interface ProductImagesContentProps {}
+interface ImagesContentProps {
+  images: string[];
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-function ProductImagesContent(props: ProductImagesContentProps) {
-  const [productImages, setProductImages] = useState<string[]>([]);
+function ImagesContent(props: ImagesContentProps) {
+  const { images, setImages } = props;
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      if (productImages.length > 5) {
+      if (images.length > 5) {
         toast.error("Máximo de imagens atingido");
         return;
       }
 
       if (acceptedFiles.length === 0) return;
 
-      const files = acceptedFiles.slice(0, 6 - productImages.length); // Only add up to 6 images
+      const files = acceptedFiles.slice(0, 6 - images.length); // Only add up to 6 images
 
       files.forEach((file) => {
         const reader = new FileReader();
 
         reader.onload = (e: ProgressEvent<FileReader>) => {
           if (e.target && typeof e.target.result === "string") {
-            setProductImages((prevImages: any) => [
-              ...prevImages,
-              e.target!.result,
-            ]);
+            setImages((prevImages: any) => [...prevImages, e.target!.result]);
           }
         };
 
         reader.readAsDataURL(file);
       });
     },
-    [productImages]
+    [images]
   );
 
   const handleImageRemove = (index: number) => {
-    setProductImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+      "image/*": [".jpeg", ".jpg"],
     },
-    maxFiles: 6 - productImages.length,
+    maxFiles: 6 - images.length,
   });
 
   return (
@@ -65,7 +67,7 @@ function ProductImagesContent(props: ProductImagesContentProps) {
               <input {...getInputProps()} />
               <ImageIcon size={25} />
             </div>
-            {productImages.map((src: string, index: number) => (
+            {images.map((src: string, index: number) => (
               <div
                 key={index}
                 className="relative w-[100px] h-[100px] flex-shrink-0"
@@ -95,4 +97,4 @@ function ProductImagesContent(props: ProductImagesContentProps) {
   );
 }
 
-export default ProductImagesContent;
+export default ImagesContent;

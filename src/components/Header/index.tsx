@@ -8,6 +8,7 @@ import { useSession, signOut } from "next-auth/react";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { RolesEnum } from "@entities/interfaces";
 
 export default function Header() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Header() {
       fetchImage();
     }
   }, [session, status]);
-  console.log(imageData?.substring(0, 200));
+
   return (
     <header className="text-black top-0 mb-10">
       <div className="py-4 px-28 flex justify-between">
@@ -62,38 +63,16 @@ export default function Header() {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/portfolio"
-                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
-                >
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
-                >
-                  Contact
-                </Link>
-              </li>
+              {session?.user.role === RolesEnum.AGENT ? (
+                <li>
+                  <Link
+                    href="/create-trip"
+                    className="rounded-full py-2 px-4 hover:bg-lightGreyApp"
+                  >
+                    Criar Viagem
+                  </Link>
+                </li>
+              ) : null}
             </ul>
           </nav>
         </div>
@@ -114,7 +93,8 @@ export default function Header() {
               <div className="relative aspect-square w-[50px]">
                 {imageData ? (
                   <Image
-                    className="rounded-full"
+                    onClick={() => router.push(`/profile/${session.user.id}`)}
+                    className="rounded-full cursor-pointer"
                     src={imageData}
                     layout="fill"
                     objectFit="cover"

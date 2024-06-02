@@ -66,6 +66,7 @@ export const authOptions: NextAuthOptions = {
         // Retrieve profile image path
         session.user.role = token.role;
         session.user.email = token.email;
+        session.user.id = token.id;
       }
       return session;
     },

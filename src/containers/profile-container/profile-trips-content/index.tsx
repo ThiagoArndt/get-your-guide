@@ -20,13 +20,17 @@ function ProfileTripsContent(props: ProfileTripsContentInterface) {
   return (
     <div>
       <div className="grid grid-cols-4 gap-6 w-full">
-        {dummyData.map((item, index) => (
+        {trips.map((item, index) => (
           <button
             className="flex justify-start items-start"
             onClick={() => {}}
             key={"1"}
           >
-            <TripCard destination={"Teste"} image={"/cool-image1.jpg"} />
+            <TripCard
+              createdBy={item.created_by}
+              destination={"Teste"}
+              image={"/cool-image1.jpg"}
+            />
           </button>
         ))}
       </div>

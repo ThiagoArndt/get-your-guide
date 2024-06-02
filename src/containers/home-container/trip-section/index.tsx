@@ -21,6 +21,7 @@ function TripSection() {
             key={item.id}
           >
             <TripCard
+              createdBy={item.createdBy}
               checkInDate={item.checkInDate}
               checkOutDate={item.checkOutDate}
               destination={item.destination}

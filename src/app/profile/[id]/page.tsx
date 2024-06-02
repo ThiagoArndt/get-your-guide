@@ -39,7 +39,6 @@ function ProfilePage({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1>{id}</h1>
       <ProfileContent
         image={profile.profile_image}
         username={profile.username}

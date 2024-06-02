@@ -17,7 +17,7 @@ export interface TripInterface {
   date_final: Date;
   date_initial: Date;
   description: string;
-  images: Buffer[];
+  images: string[];
   price: number;
   title: string;
 }

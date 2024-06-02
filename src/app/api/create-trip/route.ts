@@ -2,17 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next/types";
 import { db as prisma } from "@db/client";
 import { TripInterface } from "@entities/interfaces";
 import { validateUser } from "@services/sessionHelper";
+import { NextResponse } from "next/server";
+import { getCurrentUser } from "@libs/session";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
-  }
-
+export async function POST(req: Request) {
   const {
-    created_by,
     date_final,
     date_initial,
     description,
@@ -20,27 +14,59 @@ export default async function handler(
     location,
     price,
     title,
-  } = req.body as TripInterface;
+  } = (await req.json()) as TripInterface;
 
   try {
-    await validateUser(created_by);
-    const tripData = await prisma.trips.createMany({
+    const user = await getCurrentUser();
+    if (user == null) {
+      return NextResponse.json(
+        {},
+        { status: 401, statusText: "Usuário não autenticado" }
+      );
+    }
+
+    let imagesBuffer = [];
+
+    for (var i in images) {
+      let bufferItem = Buffer.from(images[i], "base64");
+      imagesBuffer.push(bufferItem);
+    }
+
+    const tripData = await prisma.trips.create({
       data: {
-        created_by: created_by,
+        created_by: user.id,
         date_final: date_final,
         date_initial: date_initial,
         description: description,
         location: location,
         price: price,
         title: title,
-        images: images,
+        images: imagesBuffer,
+        comments: [],
       },
     });
-    return res
-      .status(200)
-      .json({ message: "Viagem criada com sucesso!", data: tripData });
+    if (tripData) {
+      const res = await prisma.agents.findMany({
+        where: { id: user.id },
+        select: {
+          created_trips: true,
+        },
+      });
+
+      await prisma.agents.updateMany({
+        where: { id: user.id },
+        data: { created_trips: [...res[0].created_trips, tripData.id] },
+      });
+    }
+    return NextResponse.json(tripData, {
+      status: 200,
+      statusText: "Viagem criada com sucesso!",
+    });
   } catch (error) {
     console.error("Erro ao criar viagem", error);
-    return res.status(401).json({ error: "Erro ao criar viagem" });
+    return NextResponse.json(
+      {},
+      { status: 401, statusText: "Erro ao criar viagem!" }
+    );
   }
 }

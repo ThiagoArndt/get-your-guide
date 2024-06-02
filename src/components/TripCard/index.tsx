@@ -2,11 +2,13 @@
 import React from "react";
 import Image from "next/image";
 import { getInfoDateFormatter } from "@services/dateFormatter";
-import { Heart } from "lucide-react";
+import { Heart, Pen } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { RolesEnum } from "@entities/interfaces";
 interface TripCardProps {
+  createdBy: string;
   image: string;
   destination: string;
-  distance?: number;
   checkInDate?: string;
   checkOutDate?: string;
   price?: number;
@@ -14,11 +16,14 @@ interface TripCardProps {
 }
 
 function TripCard(props: Readonly<TripCardProps>) {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const {
+    createdBy,
     checkInDate,
     checkOutDate,
     destination,
-    distance,
     image,
     maxPeople,
     price,
@@ -27,13 +32,24 @@ function TripCard(props: Readonly<TripCardProps>) {
   return (
     <div className="p-4 w-full  flex flex-col gap-2 rounded-3xl py-10 px-5 cursor-pointer hover:bg-blackApp hover:bg-opacity-5">
       <div className="relative w-full h-[300px]">
-        <Heart
-          onClick={(e) => {
-            e.stopPropagation();
-            return false;
-          }}
-          className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
-        />
+        {user?.role === RolesEnum.USER ? (
+          <Heart
+            onClick={(e) => {
+              e.stopPropagation();
+              return false;
+            }}
+            className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
+          />
+        ) : null}
+        {user?.id == createdBy ? (
+          <Pen
+            onClick={(e) => {
+              e.stopPropagation();
+              return false;
+            }}
+            className="absolute right-4 top-3 z-20 text-white hover:fill-red-600"
+          />
+        ) : null}
         <Image
           layout="fill"
           objectFit="cover"
@@ -47,11 +63,6 @@ function TripCard(props: Readonly<TripCardProps>) {
         <p className="font-extrabold text-2xl">{destination}</p>
       </div>
       <div className="flex items-start flex-col">
-        {distance != null ? (
-          <p className="text-greyApp font-light text-lg">
-            {distance}km de distância
-          </p>
-        ) : null}
         {checkInDate != null && checkOutDate != null ? (
           <p className="text-greyApp font-light text-lg">
             {getInfoDateFormatter(

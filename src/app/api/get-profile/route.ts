@@ -39,9 +39,10 @@ export async function POST(req: Request) {
 
     let transformedTrips: ProfileTripInterface[] = trips.map((item) => ({
       id: item.id,
+      created_by: item.created_by,
       image: item.images[0],
       destination: item.location,
-      isliked: false,
+      isliked: true,
     }));
 
     let newData = {

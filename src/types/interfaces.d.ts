@@ -18,6 +18,7 @@ interface ProfileInterface {
 
 interface ProfileTripInterface {
   id: string;
+  created_by: string;
   image: Buffer;
   destination: string;
   isLiked?: boolean;

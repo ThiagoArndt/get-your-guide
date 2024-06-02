@@ -10,3 +10,14 @@ export function getImageFromBuffer(data: any) {
 
   return `data:image/jpeg;base64,/${result}`;
 }
+
+export function imageToBuffer(data: any) {
+  const byteString = atob(data.split(",")[1]);
+  const buffer = Buffer.alloc(byteString.length);
+
+  for (let i = 0; i < byteString.length; i++) {
+    buffer[i] = byteString.charCodeAt(i);
+  }
+
+  return buffer;
+}

@@ -1,22 +1,28 @@
 "use client";
 import Button from "@components/Button";
 import Card from "@components/Card";
-import InputField from "@components/InputField";
-import TextArea from "@components/TextArea";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { Calendar } from "@components/Calendar";
 import { dateFormatter } from "@services/dateFormatter";
+import { UseFormRegister } from "react-hook-form";
+import { CreateTripFormValues } from "@app/create-trip/page";
 
-function DatesContent() {
-  const [checkIn, setCheckIn] = useState<Date | undefined>(undefined);
-  const [checkOut, setCheckOut] = useState<Date | undefined>(undefined);
+interface DatesContentInterface {
+  setCheckInDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  setCheckOutDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  checkInDate: Date | undefined;
+  checkOutDate: Date | undefined;
+}
+
+function DatesContent(props: DatesContentInterface) {
+  const { checkInDate, checkOutDate, setCheckInDate, setCheckOutDate } = props;
 
   useEffect(() => {
-    if (checkIn && checkOut && checkOut < checkIn) {
-      setCheckOut(undefined);
+    if (checkInDate && checkOutDate && checkOutDate < checkInDate) {
+      setCheckOutDate(undefined);
     }
-  }, [checkIn, checkOut, setCheckOut]);
+  }, [checkInDate, checkOutDate, setCheckOutDate]);
 
   return (
     <div className="flex flex-col gap-4 flex-grow w-full">
@@ -42,19 +48,19 @@ function DatesContent() {
               >
                 <Calendar
                   fromDate={new Date()}
-                  toDate={checkOut}
+                  toDate={checkOutDate}
                   mode="single"
-                  selected={checkIn}
-                  onSelect={setCheckIn}
+                  selected={checkInDate}
+                  onSelect={setCheckInDate}
                   className="rounded-md border"
                 />
               </Popover.Content>
             </Popover.Root>
-            {checkIn === undefined ||
-            checkIn.getTime() === new Date().getTime() ? (
+            {checkInDate === undefined ||
+            checkInDate.getTime() === new Date().getTime() ? (
               <h1></h1>
             ) : (
-              <h1>{dateFormatter(checkIn)}</h1>
+              <h1>{dateFormatter(checkInDate)}</h1>
             )}
             <Popover.Root>
               <Popover.Trigger>
@@ -72,20 +78,20 @@ function DatesContent() {
                 sideOffset={5}
               >
                 <Calendar
-                  fromDate={checkIn ?? new Date()}
+                  fromDate={checkInDate ?? new Date()}
                   toDate={undefined}
                   mode="single"
-                  selected={checkOut}
-                  onSelect={setCheckOut}
+                  selected={checkOutDate}
+                  onSelect={setCheckOutDate}
                   className="rounded-md border"
                 />
               </Popover.Content>
             </Popover.Root>
-            {checkOut === undefined ||
-            checkOut.getTime() === new Date().getTime() ? (
+            {checkOutDate === undefined ||
+            checkOutDate.getTime() === new Date().getTime() ? (
               <h1></h1>
             ) : (
-              <h1>{dateFormatter(checkOut)}</h1>
+              <h1>{dateFormatter(checkOutDate)}</h1>
             )}
           </div>
         </div>

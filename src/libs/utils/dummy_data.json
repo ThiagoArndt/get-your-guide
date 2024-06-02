@@ -1,83 +1,90 @@
 [
-    {
-        "id" : 1,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 2,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 3,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 4,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 5,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 6,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 7,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    },
-    {
-        "id" : 8,
-        "image": "/placeholder-image.jpg",
-        "destination" : "Urubici, Brasil",
-        "distance": 300,
-        "checkInDate": "2024-05-12T12:00:00",
-        "checkOutDate": "2024-10-15T12:00:00",
-        "price": 320,
-        "maxPeople": 4
-    }
- 
+  {
+    "id": 1,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 2,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 3,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 4,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 5,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 6,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 7,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  },
+  {
+    "id": 8,
+    "createdBy": "665662b66b175897ffa85825",
+    "image": "/placeholder-image.jpg",
+    "destination": "Urubici, Brasil",
+    "distance": 300,
+    "checkInDate": "2024-05-12T12:00:00",
+    "checkOutDate": "2024-10-15T12:00:00",
+    "price": 320,
+    "maxPeople": 4
+  }
 ]
