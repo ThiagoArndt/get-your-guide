@@ -8,9 +8,9 @@ datasource db {
 }
 
 type TripsComments {
-  comment String
-  rating  Int
-  userId  String @db.ObjectId
+  comment  String
+  rating   Int
+  username String
 }
 
 model agents {
@@ -23,16 +23,17 @@ model agents {
 }
 
 model trips {
-  id           String          @id @default(auto()) @map("_id") @db.ObjectId
-  comments     TripsComments[]
-  created_by   String          @db.ObjectId
-  date_final   DateTime        @db.Date
-  date_initial DateTime        @db.Date
-  description  String
-  images       Bytes[]
-  location     String
-  price        Float
-  title        String
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  comments      TripsComments[]
+  created_by    String          @db.ObjectId
+  date_final    DateTime        @db.Date
+  date_initial  DateTime        @db.Date
+  description   String
+  images        Bytes[]
+  location      String
+  number_people Int
+  price         Float
+  title         String
 }
 
 model users {

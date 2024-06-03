@@ -1,12 +1,19 @@
 interface Trip {
-  id?: number;
-  image?: string;
-  destination?: string;
-  distance?: number;
-  checkInDate?: string;
-  checkOutDate?: string;
-  price?: number;
+  id?: string;
+  images: Buffer[];
+  destination: string;
+  description: string;
+  checkInDate?: Date;
+  checkOutDate?: Date;
+  price: number;
   maxPeople?: number;
+  comments: CommentTripInterface[];
+  created_by: {
+    id: string;
+    username: string;
+    profile_image: Buffer;
+  };
+  title: string;
 }
 
 interface ProfileInterface {
@@ -22,4 +29,10 @@ interface ProfileTripInterface {
   image: Buffer;
   destination: string;
   isLiked?: boolean;
+}
+
+interface CommentTripInterface {
+  username: string;
+  comment: string;
+  rating: number;
 }

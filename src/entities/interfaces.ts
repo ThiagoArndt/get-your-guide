@@ -20,4 +20,12 @@ export interface TripInterface {
   images: string[];
   price: number;
   title: string;
+  number_people: number;
+}
+
+export interface CommentInterface {
+  tripId: string;
+  username: string;
+  comment: string;
+  rating: number;
 }

@@ -3,16 +3,14 @@ import Image from "next/image";
 import coolImage1 from "../../../../public/cool-image1.jpg";
 import coolImage2 from "../../../../public/cool-image2.jpg";
 import coolImage3 from "../../../../public/cool-image3.webp";
+import { getImageFromBuffer } from "@services/imageHelper";
 
 interface ImagesSectionProps {
-  imageOne: string;
-  imageTwo: string;
-  imageThree: string;
-  imageFour: string;
-  imageFive: string;
+  images: Buffer[];
 }
 
-function ImagesSection() {
+function ImagesSection(props: ImagesSectionProps) {
+  const { images } = props;
   return (
     <div className="flex flex-col grow gap-10">
       <div className="relative w-full h-[450px]">
@@ -21,7 +19,7 @@ function ImagesSection() {
           quality={100}
           className="rounded-[70px]"
           objectFit="cover"
-          src={coolImage1}
+          src={getImageFromBuffer(images[0])}
           alt=""
         />
       </div>
@@ -32,7 +30,7 @@ function ImagesSection() {
             quality={100}
             className="rounded-[70px]"
             objectFit="cover"
-            src={coolImage2}
+            src={getImageFromBuffer(images[1])}
             alt=""
           />
         </div>
@@ -42,7 +40,7 @@ function ImagesSection() {
             quality={100}
             className="rounded-[70px]"
             objectFit="cover"
-            src={coolImage3}
+            src={getImageFromBuffer(images[2])}
             alt=""
           />
         </div>
@@ -53,7 +51,7 @@ function ImagesSection() {
           quality={100}
           className="rounded-[70px]"
           objectFit="cover"
-          src={coolImage1}
+          src={getImageFromBuffer(images[3])}
           alt=""
         />
       </div>
@@ -64,7 +62,7 @@ function ImagesSection() {
             quality={100}
             className="rounded-[70px]"
             objectFit="cover"
-            src={coolImage1}
+            src={getImageFromBuffer(images[4])}
             alt=""
           />
         </div>
@@ -74,7 +72,7 @@ function ImagesSection() {
             quality={100}
             className="rounded-[70px]"
             objectFit="cover"
-            src={coolImage2}
+            src={getImageFromBuffer(images[5])}
             alt=""
           />
         </div>

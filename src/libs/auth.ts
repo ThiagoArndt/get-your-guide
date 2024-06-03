@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req): Promise<any> {
-        console.log("Authorize method", credentials);
+        //console.log("Authorize method", credentials);
 
         if (!credentials?.email || !credentials?.password)
           throw new Error("Dados de Login necessarios");
@@ -61,18 +61,20 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token, user }) {
-      console.log(session, token, user);
+      //  console.log(session, token, user);
       if (token) {
         // Retrieve profile image path
         session.user.role = token.role;
         session.user.email = token.email;
         session.user.id = token.id;
+        session.user.username = token.username;
       }
       return session;
     },
     async jwt({ token, user, account }) {
-      console.log(token, user, account);
+      //console.log(token, user, account);
       if (user) {
+        token.username = user.username;
         token.id = user.id;
         token.role = user.role;
       }

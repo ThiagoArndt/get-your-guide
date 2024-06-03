@@ -82,11 +82,6 @@ export default function Header() {
           {status === "loading" ? (
             <div className="flex flex-row gap-5">
               <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
-              <Button
-                onPressed={() => signOut()}
-                backgroundColor="black"
-                text="Sign Out"
-              />
             </div>
           ) : session ? (
             <div className="flex flex-row gap-5">

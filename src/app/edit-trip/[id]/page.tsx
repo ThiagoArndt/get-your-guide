@@ -5,7 +5,7 @@ import DatesContent from "@containers/manage-trip-container/dates-content";
 import DescriptionContent from "@containers/manage-trip-container/description-content";
 import ProductImagesContent from "@containers/manage-trip-container/images-content";
 import PricingContent from "@containers/manage-trip-container/pricing-content";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@components/Button";
 import { useSession } from "next-auth/react";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
@@ -13,7 +13,10 @@ import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { TripInterface } from "@entities/interfaces";
 import { imageToBuffer } from "@services/imageHelper";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
+import { getCurrentUser } from "@libs/session";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@libs/auth";
 
 export interface CreateTripFormValues {
   Title: string;
@@ -25,7 +28,7 @@ export interface CreateTripFormValues {
   Price: string;
 }
 
-function CreateTripPage() {
+function CreateTripPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [title, setTitle] = useState<string>("");
@@ -36,14 +39,61 @@ function CreateTripPage() {
   const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
   const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
   const [price, setPrice] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateTripFormValues>();
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
+  const [profile, setProfile] = useState<string[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get(`/api/get-selected-trip/${params.id}`);
+      let data = response.data as Trip;
+
+      setTitle(data.title);
+    };
+
+    const fetchData = async () => {
+      if (status === "authenticated" && session?.user?.id) {
+        try {
+          const res = await axios.get(`/api/get-user-trips/${session.user.id}`);
+          if (res.status === 200) {
+            setProfile(res.data.created_trips);
+            if (!res.data.created_trips.includes(params.id)) {
+              return (
+                <p>
+                  Este id de viagem não existe, ou não pertence ao seu usuário
+                </p>
+              );
+            } else {
+              await getData();
+              setIsLoading(false);
+            }
+          } else {
+            setError("Profile not found");
+          }
+        } catch (e) {
+          setError("Profile not found");
+        }
+      }
+    };
+
+    fetchData();
+  }, [status, session]);
+
+  if (error) {
+    return notFound();
+  }
+  if (status === "loading" || !profile || isLoading) {
+    return <p>Carregando...</p>;
+  }
+
+  if (!profile) {
+    return <p>Carregando...</p>;
   }
 
   const onSubmit: SubmitHandler<CreateTripFormValues> = async (data) => {

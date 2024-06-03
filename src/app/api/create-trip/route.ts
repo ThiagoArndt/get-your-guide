@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     location,
     price,
     title,
+    number_people,
   } = (await req.json()) as TripInterface;
 
   try {
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
         title: title,
         images: imagesBuffer,
         comments: [],
+        number_people: number_people,
       },
     });
     if (tripData) {

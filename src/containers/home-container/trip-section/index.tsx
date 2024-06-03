@@ -25,7 +25,6 @@ function TripSection() {
               checkInDate={item.checkInDate}
               checkOutDate={item.checkOutDate}
               destination={item.destination}
-              distance={item.distance}
               image={item.image}
               maxPeople={item.maxPeople}
               price={item.price}
