@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       let bufferItem = Buffer.from(images[i], "base64");
       imagesBuffer.push(bufferItem);
     }
-
+    console.log(number_people);
     const tripData = await prisma.trips.create({
       data: {
         created_by: user.id,
@@ -45,8 +45,10 @@ export async function POST(req: Request) {
         images: imagesBuffer,
         comments: [],
         number_people: number_people,
+        user_likes: [],
       },
     });
+    console.log(tripData);
     if (tripData) {
       const res = await prisma.agents.findMany({
         where: { id: user.id },

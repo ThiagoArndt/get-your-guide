@@ -27,7 +27,12 @@ function Trips() {
         destination={destination}
         maxPeople={maxPeople}
       />
-      <ContentSection />
+      <ContentSection
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        destination={destination}
+        maxPeople={maxPeople}
+      />
     </div>
   );
 }

@@ -14,6 +14,7 @@ interface Trip {
     profile_image: Buffer;
   };
   title: string;
+  userLikes: string[];
 }
 
 interface ProfileInterface {
@@ -28,11 +29,23 @@ interface ProfileTripInterface {
   created_by: string;
   image: Buffer;
   destination: string;
-  isLiked?: boolean;
+  userLikes: string[];
 }
 
 interface CommentTripInterface {
   username: string;
   comment: string;
   rating: number;
+}
+
+interface CardTrip {
+  id?: string;
+  image: Buffer;
+  destination: string;
+  checkInDate?: Date;
+  checkOutDate?: Date;
+  price: number;
+  maxPeople?: number;
+  created_by: string;
+  userLikes: string[];
 }

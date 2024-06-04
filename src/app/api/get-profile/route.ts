@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       created_by: item.created_by,
       image: item.images[0],
       destination: item.location,
-      isliked: true,
+      userLikes: item.user_likes,
     }));
 
     let newData = {

@@ -82,7 +82,7 @@ function CreateTripPage() {
       location: location,
       price: parseFloat(price),
       title: title,
-      numberPeople: numberPeople,
+      number_people: parseInt(numberPeople),
     };
 
     try {

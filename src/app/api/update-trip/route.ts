@@ -1,15 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { db as prisma } from "@db/client";
+import { TripInterface } from "@entities/interfaces";
+import { getCurrentUser } from "@libs/session";
+import { NextResponse } from "next/server";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
-  }
-
+export async function POST(req: Request) {
   const {
+    tripId,
     created_by,
     date_final,
     date_initial,
@@ -18,9 +15,21 @@ export default async function handler(
     location,
     price,
     title,
-  } = req.body as TripInterface;
+  } = await req.json();
 
-  const { id } = req.query as { id: string };
+  const user = await getCurrentUser();
+  if (user == null) {
+    return NextResponse.json(
+      {},
+      { status: 401, statusText: "Usuário não autenticado" }
+    );
+  }
+
+  let imagesBuffer = [];
+  for (var i in images) {
+    let bufferItem = Buffer.from(images[i], "base64");
+    imagesBuffer.push(bufferItem);
+  }
 
   try {
     const tripData = await prisma.trips.updateMany({
@@ -32,15 +41,16 @@ export default async function handler(
         location: location,
         price: price,
         title: title,
-        images: images,
+        images: imagesBuffer,
       },
-      where: { id: id },
+      where: { id: tripId },
     });
-    return res
-      .status(200)
-      .json({ message: "Viagem atualizada com sucesso!", data: tripData });
+    return NextResponse.json(tripData, {
+      status: 200,
+      statusText: "Viagem atualizada com sucesso!",
+    });
   } catch (error) {
     console.error("Erro ao atualizar viagem", error);
-    return res.status(401).json({ error: "Erro ao atualizar viagem" });
+    return NextResponse.json({ error: "Erro no servidor" }, { status: 500 });
   }
 }

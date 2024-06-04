@@ -34,6 +34,7 @@ model trips {
   number_people Int
   price         Float
   title         String
+  user_likes    String[]
 }
 
 model users {

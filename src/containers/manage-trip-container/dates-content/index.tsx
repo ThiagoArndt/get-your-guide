@@ -57,10 +57,10 @@ function DatesContent(props: DatesContentInterface) {
               </Popover.Content>
             </Popover.Root>
             {checkInDate === undefined ||
-            checkInDate.getTime() === new Date().getTime() ? (
+            new Date(checkInDate).getTime() === new Date().getTime() ? (
               <h1></h1>
             ) : (
-              <h1>{dateFormatter(checkInDate)}</h1>
+              <h1>{dateFormatter(new Date(checkInDate))}</h1>
             )}
             <Popover.Root>
               <Popover.Trigger>
@@ -88,10 +88,10 @@ function DatesContent(props: DatesContentInterface) {
               </Popover.Content>
             </Popover.Root>
             {checkOutDate === undefined ||
-            checkOutDate.getTime() === new Date().getTime() ? (
+            new Date(checkOutDate).getTime() === new Date().getTime() ? (
               <h1></h1>
             ) : (
-              <h1>{dateFormatter(checkOutDate)}</h1>
+              <h1>{dateFormatter(new Date(checkOutDate))}</h1>
             )}
           </div>
         </div>

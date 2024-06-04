@@ -12,7 +12,7 @@ import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { TripInterface } from "@entities/interfaces";
-import { imageToBuffer } from "@services/imageHelper";
+import { getImageFromBuffer, imageToBuffer } from "@services/imageHelper";
 import { notFound, useRouter } from "next/navigation";
 import { getCurrentUser } from "@libs/session";
 import { getServerSession } from "next-auth";
@@ -55,6 +55,13 @@ function CreateTripPage({ params }: { params: { id: string } }) {
       let data = response.data as Trip;
 
       setTitle(data.title);
+      setLocation(data.destination);
+      setNumberPeople(data.maxPeople?.toString() ?? "");
+      setDescription(data.description);
+      setImages(data.images.map((item) => getImageFromBuffer(item)));
+      setCheckInDate(data.checkInDate);
+      setCheckOutDate(data.checkOutDate);
+      setPrice(data.price.toString());
     };
 
     const fetchData = async () => {
@@ -125,6 +132,8 @@ function CreateTripPage({ params }: { params: { id: string } }) {
     );
 
     const objData = {
+      created_by: session?.user.id,
+      tripId: params.id,
       date_final: checkOutDate!,
       date_initial: checkInDate!,
       description: description,
@@ -136,7 +145,7 @@ function CreateTripPage({ params }: { params: { id: string } }) {
     };
 
     try {
-      const res = await axios.post("api/create-trip", objData);
+      const res = await axios.post(`/api/update-trip`, objData);
       toast.success(res.statusText);
       router.push("/");
     } catch (e) {
@@ -156,6 +165,22 @@ function CreateTripPage({ params }: { params: { id: string } }) {
       toast.error("Descrição é obrigatório");
     } else if (errors.Price) {
       toast.error("Preço é obrigatório");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      console.log("aaa");
+      const res = await axios.post(`/api/delete-trip`, {
+        tripId: params.id,
+      });
+      console.log(res);
+      toast.success(res.statusText);
+      router.push("/");
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        toast.error(e.response?.statusText ?? "Erro desconhecido");
+      }
     }
   };
 
@@ -195,15 +220,18 @@ function CreateTripPage({ params }: { params: { id: string } }) {
           <div className="flex flex-row gap-5 w-full justify-end mt-10">
             <Button
               hasBorder
-              backgroundColor="white"
-              onPressed={() => router.push("/")}
-              text="Cancelar"
+              backgroundColor="red"
+              onPressed={async (e: any) => {
+                e.preventDefault();
+                await handleDelete();
+              }}
+              text="Deletar"
             />
             <Button
               hasBorder
               backgroundColor="black"
               onPressed={handleSubmit(onSubmit, onError)}
-              text="Confirmar"
+              text="Atualizar"
             />
           </div>
         </div>

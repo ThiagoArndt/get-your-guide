@@ -7,18 +7,18 @@ interface ButtonProps
     HTMLButtonElement
   > {
   text: string;
-  backgroundColor: "white" | "black";
-  onPressed: (() => Promise<void>) | (() => void);
+  backgroundColor: "white" | "black" | "red";
+  onPressed: (() => Promise<void>) | (() => void) | ((e: any) => void);
   hasBorder?: boolean;
 }
 
 function Button(props: Readonly<ButtonProps>) {
   const { text, backgroundColor, className, onPressed, hasBorder } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const handleClick = async () => {
+  const handleClick = async (e: any) => {
     if (isLoading == false) {
       setIsLoading(true);
-      await onPressed();
+      await onPressed(e);
       setIsLoading(false);
     }
   };
@@ -26,7 +26,11 @@ function Button(props: Readonly<ButtonProps>) {
   const backgroundClass =
     backgroundColor === "black"
       ? "bg-black text-background hover:bg-opacity-85"
-      : "bg-transparent border-black text-black hover:bg-lightGreyApp";
+      : backgroundColor === "white"
+      ? "bg-transparent border-black text-black hover:bg-lightGreyApp"
+      : backgroundColor === "red"
+      ? "bg-red-600 text-white hover:bg-opacity-90"
+      : "";
 
   const borderClass = hasBorder ? "border-2" : "";
 
