@@ -6,33 +6,15 @@ image: node:20.11.0
 pipelines:
   branches:
     main:
-      # - step:
-      #     name: Run SonarCloud
-      #     script:
-      #       - pipe: sonarsource/sonarcloud-scan:2.0.0
       - step:
-          name: Generate .env
-          image: amazon/aws-cli
+          name: Run SonarCloud
           script:
-            - |
-              aws ssm get-parameter \
-                  --with-decryption \
-                  --name nextjsdevops_env \
-                  --region sa-east-1 \
-                  --query Parameter.Value \
-                  --output text > .env
-          artifacts:
-            - .env
+            - pipe: sonarsource/sonarcloud-scan:2.0.0
 
       - step:
-          name: Install Dependencies & Build Project
+          name: Prepare Files for Deployment
           script:
-            # - npm install
-            # - npm run build
             - chmod +x devops/after_install.sh
-            # - cp appspec.yml build/ #Copy appspec to build folder
-            # - cp package.json package-lock.json build/ #Copy package.json to build folder
-            # - cp -r .next build/ #Copy .next to build folder
             - tar -czvf build.tar.gz -T devops/bundle.conf
           artifacts:
             - build.tar.gz
@@ -49,72 +31,3 @@ pipelines:
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
-
-      # - step:
-      #     name: Deploy to Netlif
-      #     deployment: production
-      #     script:
-      #       - |
-      #         curl -H "Content-Type: application/zip" \
-      #            -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-      #            --data-binary "@website.zip" \
-      #            https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
-
-  # pull-requests:
-  #   "**":
-  #     - step:
-  #         name: Run SonarCloud
-  #         script:
-  #           - pipe: sonarsource/sonarcloud-scan:2.0.0
-
-# clone:
-#   depth: full
-
-# image: node:20.11.0
-# pipelines:
-#   branches:
-#     main:
-#       - step:
-#           name: Install Node.js 20 and dependencies
-#           script:
-#             - npm install
-#           artifacts:
-#             - .node_modules/**
-#       # - step:
-#       #     name: Run SonarCloud
-#       #     script:
-#       #       - pipe: sonarsource/sonarcloud-scan:2.0.0
-
-#       - step:
-#           name: Build Project & Zip
-#           script:
-#             - npm install
-#             - npm run build
-#           artifacts:
-#             - out/**
-
-#       - step:
-#           name: Zip .next Folder
-#           script:
-#             - apt-get update && apt-get install -y zip
-#             - zip -r website.zip out/
-#           artifacts:
-#             - website.zip
-
-#       - step:
-#           name: Deploy to Netlify
-#           deployment: production
-#           script:
-#             - |
-#               curl -H "Content-Type: application/zip" \
-#                  -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-#                  --data-binary "@website.zip" \
-#                  https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
-
-#   pull-requests:
-#     '**':
-#       - step:
-#           name: Run SonarCloud
-#           script:
-#             - pipe: sonarsource/sonarcloud-scan:2.0.0
-
