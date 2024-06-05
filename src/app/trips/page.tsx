@@ -3,10 +3,10 @@ import ContentSection from "@containers/search-container/content-section";
 import FilterSection from "@containers/search-container/filter-section";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function Trips() {
+function Content() {
   const searchParams = useSearchParams();
 
   let destinationSearch = searchParams?.get("address");
@@ -63,6 +63,14 @@ function Trips() {
         trips={trips}
       />
     </div>
+  );
+}
+
+function Trips() {
+  return (
+    <Suspense fallback={<p>Carregando...</p>}>
+      <Content></Content>
+    </Suspense>
   );
 }
 

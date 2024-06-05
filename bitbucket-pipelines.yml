@@ -15,6 +15,16 @@ pipelines:
           name: Install Dependencies & Build Project
           script:
             - npm install
+            -  #Generate .env
+            - PARAMETER="nextjsdevops-env"
+            - REGION="sa-east-1"
+            - |
+              aws ssm get-parameter \
+                  --with-decryption \
+                  --name $PARAMETER \
+                  --region $REGION \
+                  --query Paramter.Value \
+                  --output text > .env
             - npm run build
             - chmod +x devops/after_install.sh
             # - cp appspec.yml build/ #Copy appspec to build folder
