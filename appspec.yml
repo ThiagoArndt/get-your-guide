@@ -11,10 +11,6 @@ permissions:
     type:
       - file
 hooks:
-  BeforeInstall:
-    - location: devops/before_install.sh
-      timeout: 400
-      runas: root
   AfterInstall:
     - location: devops/after_install.sh
       timeout: 400
