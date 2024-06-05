@@ -18,7 +18,7 @@ pipelines:
             # - cp appspec.yml build/ #Copy appspec to build folder
             # - cp package.json package-lock.json build/ #Copy package.json to build folder
             # - cp -r .next build/ #Copy .next to build folder
-            - tar -czf build.tar.gz -T devops/bundle.conf > /dev/null 2>&1
+            - tar -czvf build.tar.gz -T devops/bundle.conf > /dev/null 2>&1
           artifacts:
             - build.tar.gz
 
