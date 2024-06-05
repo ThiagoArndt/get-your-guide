@@ -10,12 +10,10 @@ pipelines:
       #     name: Run SonarCloud
       #     script:
       #       - pipe: sonarsource/sonarcloud-scan:2.0.0
-
       - step:
-          name: Install Dependencies & Build Project
+          name: Generate .env
+          image: amazon/aws-cli
           script:
-            - npm install
-            -  #Generate .env
             - PARAMETER="nextjsdevops-env"
             - REGION="sa-east-1"
             - |
@@ -25,6 +23,13 @@ pipelines:
                   --region $REGION \
                   --query Paramter.Value \
                   --output text > .env
+          artifacts:
+            - .env
+
+      - step:
+          name: Install Dependencies & Build Project
+          script:
+            - npm install
             - npm run build
             - chmod +x devops/after_install.sh
             # - cp appspec.yml build/ #Copy appspec to build folder
