@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <Provider store={store}>
-        <html lang="en">
+        <html lang="pt-BR">
           <body className={nunito.className}>
             <Header />
             <main className="px-20">{children}</main>

@@ -27,8 +27,8 @@ pipelines:
       - step:
           name: Install Dependencies & Build Project
           script:
-            - npm install
-            - npm run build
+            # - npm install
+            # - npm run build
             - chmod +x devops/after_install.sh
             # - cp appspec.yml build/ #Copy appspec to build folder
             # - cp package.json package-lock.json build/ #Copy package.json to build folder

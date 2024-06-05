@@ -9,12 +9,10 @@ export NVM_DIR="$HOME/.nvm"
 cd /var/www/html
 
 #Generate .env
-PARAMETER="nextjsdevops-env"
-REGION="sa-east-1"
 aws ssm get-parameter \
     --with-decryption \
-    --name $PARAMETER \
-    --region $REGION \
+    --name nextjsdevops_env \
+    --region sa-east-1 \
     --query Parameter.Value \
     --output text > /var/www/html/.env
 
