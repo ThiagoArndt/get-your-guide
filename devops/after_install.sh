@@ -8,6 +8,17 @@ export NVM_DIR="$HOME/.nvm"
 # Change to the application directory
 cd /var/www/html
 
+#Generate .env
+PARAMETER="nextjsdevops-env"
+REGION="sa-east-1"
+aws ssm get-parameter \
+    --with-decryption \
+    --name $PARAMETER \
+    --region $REGION \
+    --query Paramter.Value \
+    --output text > /var/www/html/.env
+
+
 sudo fuser -k 3000/tcp
 
 # Iniciar a aplicação em segundo plano com nohup e redirecionar saída
