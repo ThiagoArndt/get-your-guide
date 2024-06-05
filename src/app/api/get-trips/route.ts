@@ -1,20 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { db as prisma } from "@db/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: Request,
-  {
-    params,
-  }: {
-    params?: {
-      destination?: string;
-      checkInDate?: Date;
-      checkOutDate?: Date;
-      maxPeople?: number;
-    };
-  }
-) {
+export async function GET(req: NextRequest) {
+  const destination = req.nextUrl.searchParams.get("destination");
+  const checkInDate = req.nextUrl.searchParams.get("checkInDate");
+  const checkOutDate = req.nextUrl.searchParams.get("checkOutDate");
+  const maxPeople = req.nextUrl.searchParams.get("maxPeople");
+
   try {
     const tripsData = await prisma.trips.findMany({
       select: {
@@ -32,36 +25,44 @@ export async function GET(
 
     // Apply filters
     let filteredTrips = tripsData;
-    if (params) {
-      const { checkInDate, checkOutDate, destination, maxPeople } = params;
-      if (destination) {
-        filteredTrips = filteredTrips.filter((trip) =>
-          trip.location
-            .toLocaleLowerCase()
-            .trim()
-            .includes(destination.toLocaleLowerCase().trim())
-        );
-      }
 
-      if (checkInDate) {
-        const checkIn = new Date(checkInDate);
-        filteredTrips = filteredTrips.filter(
-          (trip) => new Date(trip.date_initial) >= checkIn
-        );
-      }
+    if (destination) {
+      filteredTrips = filteredTrips.filter((trip) =>
+        trip.location
+          .toLocaleLowerCase()
+          .trim()
+          .includes(destination.toLocaleLowerCase().trim())
+      );
+    }
 
-      if (checkOutDate) {
-        const checkOut = new Date(checkOutDate);
-        filteredTrips = filteredTrips.filter(
-          (trip) => new Date(trip.date_final) <= checkOut
-        );
-      }
+    if (checkInDate && checkOutDate) {
+      const checkIn = new Date(checkInDate);
+      const checkOut = new Date(checkOutDate);
+      filteredTrips = filteredTrips.filter(
+        (trip) =>
+          new Date(trip.date_initial) <= checkIn &&
+          new Date(trip.date_final) >= checkOut
+      );
+    } else if (checkInDate) {
+      const checkIn = new Date(checkInDate);
+      filteredTrips = filteredTrips.filter(
+        (trip) =>
+          new Date(trip.date_initial) <= checkIn &&
+          new Date(trip.date_final) >= checkIn
+      );
+    } else if (checkOutDate) {
+      const checkOut = new Date(checkOutDate);
+      filteredTrips = filteredTrips.filter(
+        (trip) =>
+          new Date(trip.date_initial) <= checkOut &&
+          new Date(trip.date_final) >= checkOut
+      );
+    }
 
-      if (maxPeople) {
-        filteredTrips = filteredTrips.filter(
-          (trip) => trip.number_people <= maxPeople
-        );
-      }
+    if (maxPeople) {
+      filteredTrips = filteredTrips.filter(
+        (trip) => trip.number_people <= parseInt(maxPeople)
+      );
     }
 
     const newData = filteredTrips.map((item) => ({

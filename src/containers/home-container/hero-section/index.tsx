@@ -3,11 +3,25 @@
 import SelectTripInfo from "@components/SelectTripInfo";
 import React, { useState } from "react";
 import Image from "next/image";
+import { dateFormatter } from "@services/dateFormatter";
+import { useRouter } from "next/navigation";
 function HeroSection() {
+  const router = useRouter();
+
   const [postAddress, setPostAddress] = useState<string | undefined>("");
   const [checkIn, setCheckIn] = useState<Date | undefined>(undefined);
   const [checkOut, setCheckOut] = useState<Date | undefined>(undefined);
   const [people, setPeople] = useState<number | undefined>(0);
+
+  const handleSearch = () => {
+    const query = new URLSearchParams();
+    if (postAddress) query.append("address", postAddress);
+    if (checkIn) query.append("checkIn", dateFormatter(checkIn));
+    if (checkOut) query.append("checkOut", dateFormatter(checkOut));
+    if (people) query.append("people", people.toString());
+
+    router.push(`/trips?${query.toString()}`);
+  };
 
   return (
     <div className="flex h-svh relative px-20 pt-32 pb-16">
@@ -18,8 +32,8 @@ function HeroSection() {
             <h1>sua melhor viagem!</h1>
           </div>
           <p className="font-light text-3xl text-white w-[50%]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Leo bibendum, in pretium lectus
-            laoreet.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Leo
+            bibendum, in pretium lectus laoreet.
           </p>
         </div>
         <SelectTripInfo
@@ -31,6 +45,7 @@ function HeroSection() {
           setCheckOut={setCheckOut}
           setPeople={setPeople}
           setPostAddress={setPostAddress}
+          handleSearch={handleSearch}
         />
       </div>
 

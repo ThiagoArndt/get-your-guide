@@ -11,39 +11,16 @@ interface ContentSectionProps {
   checkInDate?: Date;
   checkOutDate?: Date;
   maxPeople?: number;
+  trips: CardTrip[];
 }
 
 function ContentSection(props: ContentSectionProps) {
-  const { checkInDate, checkOutDate, destination, maxPeople } = props;
+  const { checkInDate, checkOutDate, destination, maxPeople, trips } = props;
   const router = useRouter();
-  const [trips, setTrips] = useState<CardTrip[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleRouting = (id: string) => {
     router.push(`/trips/${id}`); // Replace '/target-page' with your target route
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/api/get-trips");
-        console.log(res.data);
-        setTrips(res.data);
-      } catch (e) {
-        if (axios.isAxiosError(e)) {
-          toast.error(e.response?.statusText ?? "Erro desconhecido");
-        } else {
-          toast.error("Erro ao resgatar viagens");
-        }
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
-  if (isLoading) {
-    return <p>Carregando...</p>;
-  }
 
   return (
     <div className="flex flex-col pt-10 gap-9">

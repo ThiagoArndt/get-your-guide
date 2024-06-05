@@ -18,11 +18,11 @@ interface SelectTripInfo {
   checkIn: Date | undefined;
   checkOut: Date | undefined;
   people: number | undefined;
+
+  handleSearch: () => void;
 }
 
 function SelectTripInfo(props: Readonly<SelectTripInfo>) {
-  const router = useRouter();
-
   const {
     setCheckIn,
     setCheckOut,
@@ -32,20 +32,11 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
     checkIn,
     checkOut,
     people,
+    handleSearch,
   } = props;
 
   const handlePostAddressChange = (address: string) => {
     setPostAddress(address);
-  };
-
-  const handleSearch = () => {
-    const query = new URLSearchParams();
-    if (postAddress) query.append("address", postAddress);
-    if (checkIn) query.append("checkIn", dateFormatter(checkIn));
-    if (checkOut) query.append("checkOut", dateFormatter(checkOut));
-    if (people) query.append("people", people.toString());
-
-    router.push(`/trips?${query.toString()}`);
   };
 
   useEffect(() => {
