@@ -18,6 +18,8 @@ aws ssm get-parameter \
     --query Parameter.Value \
     --output text > /var/www/html/.env
 
+npm install
+npm run build
 
 sudo fuser -k 3000/tcp
 
