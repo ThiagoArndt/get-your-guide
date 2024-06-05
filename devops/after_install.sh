@@ -8,8 +8,16 @@ export NVM_DIR="$HOME/.nvm"
 # Change to the application directory
 cd /var/www/html
 
-npm install
-npm run build
+#Generate .env
+PARAMETER="nextjsdevops-env"
+REGION="sa-east-1"
+aws ssm get-parameter \
+    --with-decryption \
+    --name $PARAMETER \
+    --region $REGION \
+    --query Parameter.Value \
+    --output text > /var/www/html/.env
+
 
 sudo fuser -k 3000/tcp
 
