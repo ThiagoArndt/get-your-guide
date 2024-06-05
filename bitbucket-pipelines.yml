@@ -14,13 +14,11 @@ pipelines:
           name: Generate .env
           image: amazon/aws-cli
           script:
-            - PARAMETER="nextjsdevops-env"
-            - REGION="sa-east-1"
             - |
               aws ssm get-parameter \
                   --with-decryption \
-                  --name $PARAMETER \
-                  --region $REGION \
+                  --name nextjsdevops-env \
+                  --region sa-east-1 \
                   --query Paramter.Value \
                   --output text > .env
           artifacts:
