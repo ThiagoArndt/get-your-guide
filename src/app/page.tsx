@@ -1,7 +1,24 @@
+import HeroSection from "@containers/home-container/hero-section";
+import TripSection from "@containers/home-container/trip-section";
 export default function Home() {
   return (
-    <div>
-      <p>Teste testando</p>
-    </div>
+    <>
+      <HeroSection />
+
+      <TripSection />
+
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+    </>
   );
 }
