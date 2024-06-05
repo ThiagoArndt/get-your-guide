@@ -1,134 +1,107 @@
+clone:
+  depth: full
 
-  clone:
-    depth: full
+image: node:20.11.0
 
-  image: node:20.11.0
+pipelines:
+  branches:
+    main:
+      # - step:
+      #     name: Run SonarCloud
+      #     script:
+      #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
-  pipelines:
-    branches:
-      main:
-        
-        # - step:
-        #     name: Run SonarCloud
-        #     script:
-        #       - pipe: sonarsource/sonarcloud-scan:2.0.0
+      - step:
+          name: Install Dependencies & Build Project
+          script:
+            - npm install
+            - npm run build
+            - chmod +x devops/after_install.sh
+            # - cp appspec.yml build/ #Copy appspec to build folder
+            # - cp package.json package-lock.json build/ #Copy package.json to build folder
+            # - cp -r .next build/ #Copy .next to build folder
+            - tar -cvzf build.tar.gz devops/after_install.sh appspec.yml package.json .next node_modules
+          artifacts:
+            - build.tar.gz
 
-        - step:
-            name: Create Scripts
-            script:
-              # Create before_install.sh script
-              - echo '#!/bin/bash' > before_install.sh
-              - echo 'sudo pkill -f "python3 -m http.server 80"' >> before_install.sh
-              
-              # Create after_install.sh script
-              - echo '#!/bin/bash' > after_install.sh
-              - echo 'cd /var/www/html' >> after_install.sh
-              - echo 'sudo nohup python3 -m http.server 80 > /dev/null 2>&1 &' >> after_install.sh
-
-              # Make scripts executable
-              - chmod +x before_install.sh
-              - chmod +x after_install.sh
-
-            artifacts:
-              - before_install.sh
-              - after_install.sh
-
-        - step:
-            name: Install Dependencies & Build Project
-            script:
-              - npm install
-              - npm run build
-              - mkdir -p out/scripts # Create Scripts folder
-              - cp before_install.sh after_install.sh out/scripts #Copy scripts to build folder
-              - cp appspec.yml out/ #Copy appspec to build folder
-              - tar -czvf build.tar.gz out
-            artifacts:
-              - build.tar.gz
-
-
-        - step:
-            name: Deployment
-            image: amazon/aws-cli
-            script:
+      - step:
+          name: Deployment
+          image: amazon/aws-cli
+          script:
             - aws s3 cp build.tar.gz s3://$S3_BUCKET/bundles/
             - |
               aws deploy create-deployment \
                 --application-name $APPLICATION_NAME \
+                --deployment-config-name $DEPLOYMENT_CONFIG_NAME \
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME \
                 --file-exists-behavior OVERWRITE \
                 --s3-location bucket=$S3_BUCKET,bundleType=tgz,key=bundles/build.tar.gz
 
-        #
-        # - step:
-        #     name: Deploy to Netlify
-        #     deployment: production
-        #     script:
-        #       - |
-        #         curl -H "Content-Type: application/zip" \
-        #            -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-        #            --data-binary "@website.zip" \
-        #            https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
+      # - step:
+      #     name: Deploy to Netlif
+      #     deployment: production
+      #     script:
+      #       - |
+      #         curl -H "Content-Type: application/zip" \
+      #            -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
+      #            --data-binary "@website.zip" \
+      #            https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
 
-    pull-requests:
-      '**':
-        - step:
-            name: Run SonarCloud
-            script:
-              - pipe: sonarsource/sonarcloud-scan:2.0.0
+  # pull-requests:
+  #   "**":
+  #     - step:
+  #         name: Run SonarCloud
+  #         script:
+  #           - pipe: sonarsource/sonarcloud-scan:2.0.0
 
+# clone:
+#   depth: full
 
+# image: node:20.11.0
+# pipelines:
+#   branches:
+#     main:
+#       - step:
+#           name: Install Node.js 20 and dependencies
+#           script:
+#             - npm install
+#           artifacts:
+#             - .node_modules/**
+#       # - step:
+#       #     name: Run SonarCloud
+#       #     script:
+#       #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
+#       - step:
+#           name: Build Project & Zip
+#           script:
+#             - npm install
+#             - npm run build
+#           artifacts:
+#             - out/**
 
+#       - step:
+#           name: Zip .next Folder
+#           script:
+#             - apt-get update && apt-get install -y zip
+#             - zip -r website.zip out/
+#           artifacts:
+#             - website.zip
 
-  # clone:
-  #   depth: full
+#       - step:
+#           name: Deploy to Netlify
+#           deployment: production
+#           script:
+#             - |
+#               curl -H "Content-Type: application/zip" \
+#                  -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
+#                  --data-binary "@website.zip" \
+#                  https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
 
-  # image: node:20.11.0
-  # pipelines:
-  #   branches:
-  #     main:
-  #       - step:
-  #           name: Install Node.js 20 and dependencies
-  #           script:
-  #             - npm install
-  #           artifacts:
-  #             - .node_modules/**              
-  #       # - step:
-  #       #     name: Run SonarCloud
-  #       #     script:
-  #       #       - pipe: sonarsource/sonarcloud-scan:2.0.0
-
-  #       - step:
-  #           name: Build Project & Zip
-  #           script:
-  #             - npm install
-  #             - npm run build
-  #           artifacts:
-  #             - out/**
-
-
-  #       - step:
-  #           name: Zip .next Folder
-  #           script:
-  #             - apt-get update && apt-get install -y zip
-  #             - zip -r website.zip out/
-  #           artifacts:
-  #             - website.zip
-
-  #       - step:
-  #           name: Deploy to Netlify
-  #           deployment: production
-  #           script:
-  #             - |
-  #               curl -H "Content-Type: application/zip" \
-  #                  -H "Authorization: Bearer nfp_oEEdNxckaew7wrUAS8WoAb3xC8bTX8Pf3249" \
-  #                  --data-binary "@website.zip" \
-  #                  https://api.netlify.com/api/v1/sites/getyourguide.netlify.app/deploys
-
-  #   pull-requests:
-  #     '**':
-  #       - step:
-  #           name: Run SonarCloud
-  #           script:
-  #             - pipe: sonarsource/sonarcloud-scan:2.0.0
+#   pull-requests:
+#     '**':
+#       - step:
+#           name: Run SonarCloud
+#           script:
+#             - pipe: sonarsource/sonarcloud-scan:2.0.0
 
