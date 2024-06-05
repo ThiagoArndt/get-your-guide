@@ -17,7 +17,7 @@ pipelines:
             - |
               aws ssm get-parameter \
                   --with-decryption \
-                  --name nextjsdevops-env \
+                  --name nextjsdevops_env \
                   --region sa-east-1 \
                   --query Paramter.Value \
                   --output text > .env
