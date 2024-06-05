@@ -3,13 +3,6 @@ os: linux
 files:
   - source: /
     destination: /var/www/html
-permissions:
-  - object: /var/www/html/node_modules/.bin/next
-    owner: root
-    group: www-data
-    mode: 755
-    type:
-      - file
 hooks:
   AfterInstall:
     - location: devops/after_install.sh
