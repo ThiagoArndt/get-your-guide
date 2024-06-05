@@ -10,30 +10,15 @@ pipelines:
       #     name: Run SonarCloud
       #     script:
       #       - pipe: sonarsource/sonarcloud-scan:2.0.0
-      - step:
-          name: Generate .env
-          image: amazon/aws-cli
-          script:
-            - |
-              aws ssm get-parameter \
-                  --with-decryption \
-                  --name nextjsdevops_env \
-                  --region sa-east-1 \
-                  --query Parameter.Value \
-                  --output text > .env
-          artifacts:
-            - .env
 
       - step:
           name: Install Dependencies & Build Project
           script:
-            - npm install
-            - npm run build
             - chmod +x devops/after_install.sh
             # - cp appspec.yml build/ #Copy appspec to build folder
             # - cp package.json package-lock.json build/ #Copy package.json to build folder
             # - cp -r .next build/ #Copy .next to build folder
-            - tar -cvzf build.tar.gz devops/after_install.sh appspec.yml package.json .next node_modules
+            - tar -zcf build.tar.gz -T /devops/bundle.conf > /dev/null 2>&1
           artifacts:
             - build.tar.gz
 

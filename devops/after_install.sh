@@ -8,6 +8,9 @@ export NVM_DIR="$HOME/.nvm"
 # Change to the application directory
 cd /var/www/html
 
+npm install
+npm run build
+
 sudo fuser -k 3000/tcp
 
 # Iniciar a aplicação em segundo plano com nohup e redirecionar saída
