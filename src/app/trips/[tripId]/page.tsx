@@ -12,7 +12,7 @@ async function TripId({ params }: Readonly<{ params: Params }>) {
   if (!data) {
     return <div>Loading...</div>;
   }
-  console.log(data);
+
   return (
     <div className="flex flex-row w-full justify-between gap-40">
       <div className="flex flex-col gap-10 w-[600px]">

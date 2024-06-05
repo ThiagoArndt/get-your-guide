@@ -71,11 +71,7 @@ function CreateTripPage({ params }: { params: { id: string } }) {
           if (res.status === 200) {
             setProfile(res.data.created_trips);
             if (!res.data.created_trips.includes(params.id)) {
-              return (
-                <p>
-                  Este id de viagem não existe, ou não pertence ao seu usuário
-                </p>
-              );
+              setError("Profile not found");
             } else {
               await getData();
               setIsLoading(false);
@@ -104,7 +100,6 @@ function CreateTripPage({ params }: { params: { id: string } }) {
   }
 
   const onSubmit: SubmitHandler<CreateTripFormValues> = async (data) => {
-    console.log(images.length);
     if (images.length != 6) {
       toast.error("Número de imagens deve ser 6");
       return;
@@ -126,10 +121,6 @@ function CreateTripPage({ params }: { params: { id: string } }) {
       toast.error("Preço não é um número");
       return;
     }
-
-    console.log(
-      images.map((dataURL) => Buffer.from(dataURL.split(",")[1], "base64"))[0]
-    );
 
     const objData = {
       created_by: session?.user.id,
@@ -156,7 +147,6 @@ function CreateTripPage({ params }: { params: { id: string } }) {
   };
 
   const onError = (errors: FieldErrors<CreateTripFormValues>) => {
-    console.log(errors);
     if (errors.Title) {
       toast.error("Título é obrigatório!");
     } else if (errors.NumberPeple) {
@@ -170,11 +160,10 @@ function CreateTripPage({ params }: { params: { id: string } }) {
 
   const handleDelete = async () => {
     try {
-      console.log("aaa");
       const res = await axios.post(`/api/delete-trip`, {
         tripId: params.id,
       });
-      console.log(res);
+
       toast.success(res.statusText);
       router.push("/");
     } catch (e) {

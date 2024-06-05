@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       rating: rating,
       username: username,
     };
-    console.log([...allComments[0].comments, newComment]);
+
     const commentsData = await prisma.trips.update({
       where: { id: tripId },
       data: {

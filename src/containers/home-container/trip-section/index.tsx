@@ -19,7 +19,7 @@ function TripSection() {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/get-trips");
-        console.log(res.data);
+
         setTrips(res.data);
       } catch (e) {
         if (axios.isAxiosError(e)) {

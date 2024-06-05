@@ -12,6 +12,7 @@ interface Trip {
     id: string;
     username: string;
     profile_image: Buffer;
+    email: string;
   };
   title: string;
   userLikes: string[];

@@ -15,8 +15,7 @@ function ProfilePage({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const res = await axios.post("/api/get-profile", { id: id });
-        console.log(res.data);
-        console.log(res.data.trips);
+
         if (res.status === 200) {
           setProfile(res.data);
         } else {
@@ -38,7 +37,7 @@ function ProfilePage({ params }: { params: { id: string } }) {
     // If profile is still loading
     return <p>Carregando...</p>;
   }
-  console.log(profile.trips[0].image);
+
   return (
     <div className="flex flex-col gap-8">
       <ProfileContent

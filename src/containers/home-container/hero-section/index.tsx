@@ -32,8 +32,8 @@ function HeroSection() {
             <h1>sua melhor viagem!</h1>
           </div>
           <p className="font-light text-3xl text-white w-[50%]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Leo
-            bibendum, in pretium lectus laoreet.
+            Venha descobir lugares incríveis para você e sua família viajarem
+            neste infinito universo de possibilidades.
           </p>
         </div>
         <SelectTripInfo

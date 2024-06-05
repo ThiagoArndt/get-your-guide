@@ -16,12 +16,12 @@ export async function POST(req: Request) {
 
     const agentData = await prisma.agents.findMany({ where: { id: user.id } });
     let agentTrips = agentData[0].created_trips;
-    console.log(agentTrips);
+
     var index = agentTrips.indexOf(tripId);
     if (index !== -1) {
       agentTrips.splice(index, 1);
     }
-    console.log(agentTrips);
+
     const res = await prisma.agents.updateMany({
       where: { id: user.id },
       data: {
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         username: agentData[0].username,
       },
     });
-    console.log(res);
+
     const tripData = await prisma.trips.delete({
       where: {
         id: tripId,

@@ -110,8 +110,8 @@ function TripCard(props: Readonly<TripCardProps>) {
         />
       </div>
 
-      <div className="flex flex-row justify-between">
-        <p className="font-extrabold text-2xl">{destination}</p>
+      <div className="flex flex-row">
+        <p className="font-extrabold text-2xl text-start">{destination}</p>
       </div>
       <div className="flex items-start flex-col">
         {checkInDate != null && checkOutDate != null ? (

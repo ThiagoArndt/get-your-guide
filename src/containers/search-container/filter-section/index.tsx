@@ -39,7 +39,7 @@ function FilterSection(props: Readonly<FilterSectionProps>) {
           maxPeople: tretatedPeople,
         },
       });
-      console.log(res.data);
+
       setTrips(res.data);
     } catch (e) {
       if (axios.isAxiosError(e)) {

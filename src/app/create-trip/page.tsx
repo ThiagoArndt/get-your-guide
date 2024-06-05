@@ -47,7 +47,6 @@ function CreateTripPage() {
   }
 
   const onSubmit: SubmitHandler<CreateTripFormValues> = async (data) => {
-    console.log(images.length);
     if (images.length != 6) {
       toast.error("Número de imagens deve ser 6");
       return;
@@ -69,10 +68,6 @@ function CreateTripPage() {
       toast.error("Preço não é um número");
       return;
     }
-
-    console.log(
-      images.map((dataURL) => Buffer.from(dataURL.split(",")[1], "base64"))[0]
-    );
 
     const objData = {
       date_final: checkOutDate!,
@@ -97,7 +92,6 @@ function CreateTripPage() {
   };
 
   const onError = (errors: FieldErrors<CreateTripFormValues>) => {
-    console.log(errors);
     if (errors.Title) {
       toast.error("Título é obrigatório!");
     } else if (errors.NumberPeple) {

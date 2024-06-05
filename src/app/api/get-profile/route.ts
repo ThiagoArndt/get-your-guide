@@ -1,16 +1,9 @@
-import fs from "fs";
 import { NextResponse } from "next/server";
-import path from "path";
-import mime from "mime-types";
 import { db as prisma } from "@db/client";
-import { getSession } from "next-auth/react";
-import { getCurrentUser } from "@libs/session";
-import { RolesEnum } from "@entities/interfaces";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 export async function POST(req: Request) {
   const { id } = await req.json();
-  console.log(id);
+
   try {
     let data;
     let trips;

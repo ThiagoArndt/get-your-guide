@@ -11,7 +11,7 @@ export async function GET(
 
   try {
     const trip = await prisma.trips.findFirst({ where: { id: id } });
-    console.log(trip);
+
     if (trip == null) {
       return NextResponse.json(
         { error: "Não foi possível encontrar esta viagem" },
@@ -20,7 +20,7 @@ export async function GET(
     }
     const creator = await prisma.agents.findUnique({
       where: { id: trip.created_by },
-      select: { id: true, username: true, profile_image: true },
+      select: { id: true, username: true, profile_image: true, email: true },
     });
 
     let responseTrip = {
@@ -28,6 +28,7 @@ export async function GET(
         id: creator?.id,
         profile_image: creator?.profile_image,
         username: creator?.username,
+        email: creator?.email,
       },
       comments: trip.comments,
       checkInDate: trip.date_initial,

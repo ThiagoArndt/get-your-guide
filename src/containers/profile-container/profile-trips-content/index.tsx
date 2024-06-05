@@ -17,7 +17,7 @@ const dummyData = [1, 2, 3, 4, 5, 6];
 function ProfileTripsContent(props: ProfileTripsContentInterface) {
   const { trips } = props;
   const { data: session, status } = useSession();
-  console.log(trips[0]);
+
   const router = useRouter();
 
   const handleRouting = (id: string) => {

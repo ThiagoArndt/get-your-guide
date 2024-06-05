@@ -7,6 +7,7 @@ import Button from "@components/Button";
 import { getImageFromBuffer } from "@services/imageHelper";
 import * as Popover from "@radix-ui/react-popover";
 import { Calendar as CalendarTrip } from "@components/Calendar";
+import toast from "react-hot-toast";
 interface ContentSectionInterface {
   title: string;
   location: string;
@@ -14,6 +15,7 @@ interface ContentSectionInterface {
     id: string;
     username: string;
     profile_image: Buffer;
+    email: string;
   };
   description: string;
   price: number;
@@ -28,6 +30,13 @@ function ContentSection(props: ContentSectionInterface) {
 
   const handleShowMore = () => {
     setIsShowMore(!isShowMore);
+  };
+
+  const handleCheckOut = () => {
+    navigator.clipboard.writeText(created_by.email);
+    toast.success(`Contato copiado com sucesso!`, {
+      duration: 3500,
+    });
   };
   return (
     <div className="flex flex-col w-full gap-10">
@@ -86,7 +95,7 @@ function ContentSection(props: ContentSectionInterface) {
         </button>
       </div>
       <Button
-        onPressed={() => {}}
+        onPressed={handleCheckOut}
         className="py-4 text-[16pt]"
         backgroundColor="black"
         text="Check-out"

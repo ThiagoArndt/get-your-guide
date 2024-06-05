@@ -48,7 +48,7 @@ export default function Header() {
               objectFit="contain"
               alt="Company logo"
             />
-            <h1 className="text-3xl font-extrabold">Company</h1>
+            <h1 className="text-3xl font-extrabold">Turistei</h1>
           </div>
 
           {/* Navigation menu */}

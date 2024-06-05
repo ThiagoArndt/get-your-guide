@@ -32,7 +32,7 @@ function CommentsSection(props: CommentsSectionInterface) {
       toast.error("Comentário muito curto!");
       return;
     }
-    console.log(session);
+
     try {
       await axios.post("/api/add-comment", {
         tripId: tripId,

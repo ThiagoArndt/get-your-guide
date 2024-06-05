@@ -71,7 +71,6 @@ function RegisterFormContent(props: Readonly<RegisterFormContentProps>) {
   };
 
   const onError = (errors: FieldErrors<IFormValues>) => {
-    console.log(errors);
     if (errors["Nome de usuário"]) {
       toast.error(
         "Nome de usuário é obrigatório, deve ter entre 6 e 20 caracteres"

@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 
     if (maxPeople) {
       filteredTrips = filteredTrips.filter(
-        (trip) => trip.number_people <= parseInt(maxPeople)
+        (trip) => trip.number_people >= parseInt(maxPeople)
       );
     }
 
