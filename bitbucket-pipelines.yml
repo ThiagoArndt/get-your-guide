@@ -19,7 +19,7 @@ pipelines:
                   --with-decryption \
                   --name nextjsdevops_env \
                   --region sa-east-1 \
-                  --query Paramter.Value \
+                  --query Parameter.Value \
                   --output text > .env
           artifacts:
             - .env
