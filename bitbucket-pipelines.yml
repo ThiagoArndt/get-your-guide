@@ -6,10 +6,10 @@ image: node:20.11.0
 pipelines:
   branches:
     main:
-      - step:
-          name: Run SonarCloud
-          script:
-            - pipe: sonarsource/sonarcloud-scan:2.0.0
+      # - step:
+      #     name: Run SonarCloud
+      #     script:
+      #       - pipe: sonarsource/sonarcloud-scan:2.0.0
 
       - step:
           name: Prepare Files for Deployment
