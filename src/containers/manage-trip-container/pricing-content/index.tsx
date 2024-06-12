@@ -17,10 +17,10 @@ function PricingContent(props: PricingContentInterface) {
 
   return (
     <div className="flex flex-col gap-4 flex-grow w-full">
-      <h1 className="font-bold text-2xl">Description</h1>
+      <h1 className="font-bold text-2xl">Preço</h1>
       <Card className="flex flex-col gap-5 h-full w-full">
         <div className="flex flex-col gap-2">
-          <h1 className="font-bold text-greyApp">Product name</h1>
+          <h1 className="font-bold text-greyApp">Valor da Viagem</h1>
           <InputField
             {...register("Price", {
               required: true,

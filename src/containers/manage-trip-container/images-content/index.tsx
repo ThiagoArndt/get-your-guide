@@ -56,7 +56,7 @@ function ImagesContent(props: ImagesContentProps) {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <h1 className="font-bold text-2xl">Description</h1>
+      <h1 className="font-bold text-2xl">Imagens</h1>
       <Card className="flex flex-col gap-5">
         <div className="flex flex-col overflow-x-auto">
           <div className="flex flex-row gap-2">
@@ -74,7 +74,6 @@ function ImagesContent(props: ImagesContentProps) {
               >
                 <div className="relative w-full h-full object-cover rounded-[13px]">
                   <X className="z-10" />
-                  <h1 className="text-blue-500">aaaa</h1>
                   <Image
                     src={src}
                     alt=""

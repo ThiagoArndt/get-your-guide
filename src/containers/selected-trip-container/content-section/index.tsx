@@ -32,8 +32,8 @@ function ContentSection(props: ContentSectionInterface) {
     setIsShowMore(!isShowMore);
   };
 
-  const handleCheckOut = () => {
-    navigator.clipboard.writeText(created_by.email);
+  const handleCheckOut = async () => {
+    await navigator.clipboard.writeText(created_by.email);
     toast.success(`Contato copiado com sucesso!`, {
       duration: 3500,
     });
@@ -95,7 +95,7 @@ function ContentSection(props: ContentSectionInterface) {
         </button>
       </div>
       <Button
-        onPressed={handleCheckOut}
+        onPressed={async () => handleCheckOut()}
         className="py-4 text-[16pt]"
         backgroundColor="black"
         text="Check-out"

@@ -83,7 +83,7 @@ export default function Header() {
             <div className="flex flex-row gap-5">
               <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
               <Button
-                onPressed={() => signOut()}
+                onPressed={() => signOut({ callbackUrl: "/", redirect: true })}
                 backgroundColor="black"
                 text="Sign Out"
               />

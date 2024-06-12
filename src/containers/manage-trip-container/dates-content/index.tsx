@@ -26,10 +26,9 @@ function DatesContent(props: DatesContentInterface) {
 
   return (
     <div className="flex flex-col gap-4 flex-grow w-full">
-      <h1 className="font-bold text-2xl">Description</h1>
+      <h1 className="font-bold text-2xl">Datas</h1>
       <Card className="flex flex-col gap-5 h-full w-full">
         <div className="flex flex-col gap-2">
-          <h1 className="font-bold text-greyApp">Product name</h1>
           <div className="grid grid-cols-2 grid-rows-2 gap-5 justify-items-start items-center">
             <Popover.Root>
               <Popover.Trigger>
