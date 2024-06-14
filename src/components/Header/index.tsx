@@ -84,7 +84,7 @@ export default function Header() {
               <div className="relative aspect-square rounded-full bg-greyApp w-[50px]"></div>
               <Button
                 onPressed={() => {
-                  signOut({ callbackUrl: "/", redirect: true });
+                  signOut({ redirect: false });
                   router.push("/");
                 }}
                 backgroundColor="black"
@@ -111,7 +111,7 @@ export default function Header() {
               </div>
               <Button
                 onPressed={() => {
-                  signOut({ callbackUrl: "/", redirect: true });
+                  signOut({ redirect: false });
                   router.push("/");
                 }}
                 backgroundColor="black"

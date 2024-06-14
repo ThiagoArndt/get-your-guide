@@ -11,6 +11,7 @@ import { RolesEnum } from "@entities/interfaces";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as any),
+
   providers: [
     CredentialProvider({
       name: "credentials",
@@ -84,6 +85,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
+
   secret: process.env.SECRET,
   debug: process.env.NODE_ENV === "development",
   pages: {
