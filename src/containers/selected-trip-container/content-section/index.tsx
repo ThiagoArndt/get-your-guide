@@ -8,6 +8,7 @@ import { getImageFromBuffer } from "@services/imageHelper";
 import * as Popover from "@radix-ui/react-popover";
 import { Calendar as CalendarTrip } from "@components/Calendar";
 import toast from "react-hot-toast";
+import { copyToClipboard } from "@libs/utils";
 interface ContentSectionInterface {
   title: string;
   location: string;

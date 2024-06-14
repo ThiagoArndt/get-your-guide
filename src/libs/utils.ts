@@ -1,4 +1,4 @@
-async function copyToClipboard(textToCopy: string) {
+export async function copyToClipboard(textToCopy: string) {
   // Navigator clipboard api needs a secure context (https)
   if (navigator.clipboard && window.isSecureContext) {
     await navigator.clipboard.writeText(textToCopy);
