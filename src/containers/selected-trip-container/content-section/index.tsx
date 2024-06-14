@@ -33,7 +33,8 @@ function ContentSection(props: ContentSectionInterface) {
   };
 
   const handleCheckOut = async () => {
-    await navigator.clipboard.writeText(created_by.email);
+    await copyToClipboard(created_by.email);
+
     toast.success(`Contato copiado com sucesso!`, {
       duration: 3500,
     });

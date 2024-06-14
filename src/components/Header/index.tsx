@@ -107,7 +107,7 @@ export default function Header() {
                 )}
               </div>
               <Button
-                onPressed={() => signOut()}
+                onPressed={() => signOut({ callbackUrl: "/", redirect: true })}
                 backgroundColor="black"
                 text="Sign Out"
               />
