@@ -1,13 +1,13 @@
 import SelectTripInfo from "@components/SelectTripInfo";
 import axios from "axios";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface FilterSectionProps {
-  destination?: string;
-  checkInDate?: Date;
-  checkOutDate?: Date;
-  maxPeople?: number;
+  destination: string | null;
+  checkInDate?: Date | null;
+  checkOutDate?: Date | null;
+  maxPeople?: number | null;
   setTrips: Dispatch<SetStateAction<CardTrip[]>>;
 }
 

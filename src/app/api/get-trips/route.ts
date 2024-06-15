@@ -35,28 +35,23 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    if (checkInDate && checkOutDate) {
-      const checkIn = new Date(checkInDate);
-      const checkOut = new Date(checkOutDate);
-      filteredTrips = filteredTrips.filter(
-        (trip) =>
-          new Date(trip.date_initial) <= checkIn &&
-          new Date(trip.date_final) >= checkOut
-      );
-    } else if (checkInDate) {
-      const checkIn = new Date(checkInDate);
-      filteredTrips = filteredTrips.filter(
-        (trip) =>
-          new Date(trip.date_initial) <= checkIn &&
-          new Date(trip.date_final) >= checkIn
-      );
-    } else if (checkOutDate) {
-      const checkOut = new Date(checkOutDate);
-      filteredTrips = filteredTrips.filter(
-        (trip) =>
-          new Date(trip.date_initial) <= checkOut &&
-          new Date(trip.date_final) >= checkOut
-      );
+    if (checkInDate || checkOutDate) {
+      const checkIn = checkInDate ? new Date(checkInDate) : null;
+      const checkOut = checkOutDate ? new Date(checkOutDate) : null;
+
+      filteredTrips = filteredTrips.filter((trip) => {
+        const tripStart = new Date(trip.date_initial);
+        const tripEnd = new Date(trip.date_final);
+
+        if (checkIn && checkOut) {
+          return tripStart <= checkIn && tripEnd >= checkOut;
+        } else if (checkIn) {
+          return tripStart <= checkIn && checkIn <= tripEnd;
+        } else if (checkOut) {
+          return tripStart <= checkOut && checkOut <= tripEnd;
+        }
+        return true;
+      });
     }
 
     if (maxPeople) {

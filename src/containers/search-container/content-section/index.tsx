@@ -7,15 +7,11 @@ import toast from "react-hot-toast";
 import { getImageFromBuffer } from "@services/imageHelper";
 
 interface ContentSectionProps {
-  destination?: string;
-  checkInDate?: Date;
-  checkOutDate?: Date;
-  maxPeople?: number;
   trips: CardTrip[];
 }
 
 function ContentSection(props: ContentSectionProps) {
-  const { checkInDate, checkOutDate, destination, maxPeople, trips } = props;
+  const { trips } = props;
   const router = useRouter();
 
   const handleRouting = (id: string) => {

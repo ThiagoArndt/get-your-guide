@@ -136,7 +136,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
       <div className="w-[1px] bg-blackApp h-full"></div>
       <Popover.Root>
         <Popover.Trigger>
-          <div className="w-[1px] bg-blackApp h-full"></div>
+          <div className="w-[1px] z-20 bg-blackApp h-full"></div>
           <div className="items-start flex flex-col cursor-pointer rounded-3xl px-4 py-2 hover:bg-lightGreyApp">
             <div className="flex flex-row gap-2">
               <h1 className="font-bold">Check-out</h1>
@@ -150,7 +150,7 @@ function SelectTripInfo(props: Readonly<SelectTripInfo>) {
         </Popover.Trigger>
 
         <Popover.Content
-          className="mt-10 rounded p-5 w-[360px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
+          className="mt-10 rounded  z-20 p-5 w-[360px] bg-white shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] will-change-[transform,opacity] data-[state=open]:data-[side=top]:animate-slideDownAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade"
           sideOffset={5}
         >
           <Calendar

@@ -16,19 +16,25 @@ function Content() {
 
   let destination = destinationSearch ?? "";
   let checkInDate =
-    checkInDateSearch != undefined ? new Date(checkInDateSearch) : undefined;
+    checkInDateSearch != undefined ? new Date(checkInDateSearch) : null;
   let checkOutDate =
-    checkOutDateSearch != undefined ? new Date(checkOutDateSearch) : undefined;
+    checkOutDateSearch != undefined ? new Date(checkOutDateSearch) : null;
   let maxPeople =
-    maxPeopleSearch != undefined ? parseInt(maxPeopleSearch) : undefined;
+    maxPeopleSearch != undefined ? parseInt(maxPeopleSearch) : null;
 
   const [trips, setTrips] = useState<CardTrip[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/api/get-trips");
+        const res = await axios.get("/api/get-trips", {
+          params: {
+            destination: destination,
+            checkInDate: checkInDate,
+            checkOutDate: checkOutDate,
+            maxPeople: maxPeople,
+          },
+        });
 
         setTrips(res.data);
       } catch (e) {
@@ -55,13 +61,7 @@ function Content() {
         maxPeople={maxPeople}
         setTrips={setTrips}
       />
-      <ContentSection
-        checkInDate={checkInDate}
-        checkOutDate={checkOutDate}
-        destination={destination}
-        maxPeople={maxPeople}
-        trips={trips}
-      />
+      <ContentSection trips={trips} />
     </div>
   );
 }
