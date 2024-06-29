@@ -1,12 +1,13 @@
 import SelectTripInfo from "@components/SelectTripInfo";
+import { dateFormatter, stringToDate } from "@services/dateFormatter";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface FilterSectionProps {
   destination: string | null;
-  checkInDate?: Date | null;
-  checkOutDate?: Date | null;
+  checkInDate?: string | null;
+  checkOutDate?: string | null;
   maxPeople?: number | null;
   setTrips: Dispatch<SetStateAction<CardTrip[]>>;
 }
@@ -18,12 +19,14 @@ function FilterSection(props: Readonly<FilterSectionProps>) {
     destination ?? ""
   );
   const [checkIn, setCheckIn] = useState<Date | undefined>(
-    checkInDate ?? undefined
+    checkInDate != null ? stringToDate(checkInDate) : undefined
   );
   const [checkOut, setCheckOut] = useState<Date | undefined>(
-    checkOutDate ?? undefined
+    checkOutDate != null ? stringToDate(checkOutDate) : undefined
   );
   const [people, setPeople] = useState<number | undefined>(maxPeople ?? 0);
+
+  console.log(checkInDate);
 
   const handleSearch = async () => {
     try {

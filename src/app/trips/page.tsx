@@ -15,12 +15,14 @@ function Content() {
   let maxPeopleSearch = searchParams?.get("people");
 
   let destination = destinationSearch ?? "";
-  let checkInDate =
-    checkInDateSearch != undefined ? new Date(checkInDateSearch) : null;
+  let checkInDate = checkInDateSearch != undefined ? checkInDateSearch : null;
   let checkOutDate =
-    checkOutDateSearch != undefined ? new Date(checkOutDateSearch) : null;
+    checkOutDateSearch != undefined ? checkOutDateSearch : null;
   let maxPeople =
     maxPeopleSearch != undefined ? parseInt(maxPeopleSearch) : null;
+
+  console.log(checkInDate);
+  console.log(checkOutDate);
 
   const [trips, setTrips] = useState<CardTrip[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -51,7 +53,7 @@ function Content() {
   if (isLoading) {
     return <p>Carregando...</p>;
   }
-
+  console.log(checkInDate);
   return (
     <div>
       <FilterSection

@@ -28,3 +28,16 @@ export const getInfoDateFormatter = (
 
   return finalDate;
 };
+
+export function stringToDate(dateString: string) {
+  // Split the string into an array [day, month, year]
+  const [day, month, year] = dateString.split("/");
+  const dayNum = parseInt(day, 10);
+  const monthNum = parseInt(month, 10) - 1; // Months are 0-based in JavaScript
+  const yearNum = parseInt(year, 10);
+
+  // Create a new Date object with the parsed values
+  const dateObject = new Date(yearNum, monthNum, dayNum);
+
+  return dateObject;
+}

@@ -55,6 +55,7 @@ function TripCard(props: Readonly<TripCardProps>) {
     try {
       await axios.post("/api/remove-like", { userId: user?.id, tripId: id });
       toast.success("Post descurtido com sucesso!");
+      setIsLiked(false);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         toast.error(e.response?.statusText ?? "Erro ao dar like");
