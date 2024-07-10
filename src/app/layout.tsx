@@ -25,7 +25,7 @@ export default function RootLayout({
             <main className="px-20">{children}</main>
             <Toaster position="bottom-center" />
             <Footer />
-            <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD67pfU2JP1ZlJ9MLIfhy6vykcl-ZJ0MNI&libraries=places" />
+            <Script src={process.env.GOOGLE_API_KEY} />
           </body>
         </html>
       </Provider>
