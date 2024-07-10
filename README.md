@@ -4,18 +4,24 @@ Thiago Arndt, Henrique, Gustavo William, Luis Felipe, Lucas dos Santos Michles
 
 # Como rodar
 
-Para rodar o projeto, entre na branch de dev, depois, gere um .env
-contendo os seguites dados:
+Crie um banco de dados mongodb e coloque sua string de conexão em "DATABASE_URL"
 
 .env:
 
 ```env
-DATABASE_URL="mongodb+srv://thiago_040404:CzESGeSUnd5vUMOP@cluster0.sm06n60.mongodb.net/getyourguidedb?retryWrites=true&w=majority&appName=Cluster0"
+DATABASE_URL="mongodb+srv://xxxxxxxx:xxxxx@cluster0.sm06n60.mongodb.net/db?retryWrites=true&w=majority&appName=Cluster0"
 NODE_ENV="development"
 SECRET="mysupersecretkey"
 ```
 
-<b> Observação: Para que o professor possa rodar, estou colocando as informações do .env aqui, apesar de não ser uma prática recomendada.
+Agora, você precisa enviar nosso schema do prisma para o banco de dados:
+
+```
+npx prisma db push
+npx prisma generate
+```
+
+OBS: Talvez seja necessário utilizar --force
 
 Feito isso, você pode rodar os seguintes comandos:
 
